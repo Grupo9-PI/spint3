@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="shortcut icon" href="./images/Lumaris.jpg" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <title>Redefinir senha</title>
+</head>
+<body>
+
+    <div class="navbar">
+        <div>
+            
+            <a class="logo" href="index.html">LUMARIS</a>
+            
+        </div>
+        <div>
+            <hr>
+        </div>
+        
+        <div class="navegacao">
+            <a href="index.html">Início</a><a href="simulador.html">Simulador</a><a href="login.html">Login</a><a href="cadastro.html">Cadastro</a>
+        </div>
+    </div>
+    
+    <div class="login">
+        <div>
+            <a href="./login.html">
+              <span class="material-icons" style="font-size: x-large; margin: 50%; color: aliceblue;">arrow_back_ios</span>
+            </a>
+          </div>
+        <div class="container">
+            
+
+            <div class="card card-login">
+                <h2>Redefinir senha</h2>
+
+                <div class="formulario">
+
+                    <div class="campo">
+                        <span>Digite seu email</span>
+                        <input id="email_input" type="text" >
+                    </div>
+
+                    <div class="campo">
+                        <span>Digite sua nova senha:</span>
+                        <input id="senha_input" type="password" placeholder="******">
+                    </div>
+
+                    <div class="campo">
+                        <span>Confirmaçao de senha:</span>
+                        <input id="confir_input" type="password" placeholder="******">
+                    </div>
+                    
+                    <button class="botao" onclick="redefinir()">Redefinir</button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+        
+    <div class="footer">
+        <div class="ondas-footer">
+            <div class="onda" id="onda"></div>
+            <div class="onda" id="onda2"></div>
+            <div class="onda" id="onda3"></div>
+            <div class="onda" id="onda4"></div>
+        </div>
+        
+        <p>&copy; Lumaris 2025 | Todos os direitos reservados</p>
+    </div>
+
+</body>
+</html>
+
+<script src="js/app.js"></script>
+
+
+<script>
+
+    function redefinir(){
+        var senha = senha_input.value;
+        var confir = confir_input.value;
+
+        if ((senha != confir) || (senha == '' || confir == '')){
+            Toastify({
+                  text: "Senha inválida",
+                  duration: 3000,
+                  style: {
+                      background: "linear-gradient(to right, #ac2121, #d62424)",
+                  },
+              }).showToast();
+        }
+        else{
+            window.location.href = "login.html";
+        }
+    }
+
+</script>
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="css/styles.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="./images/Lumaris.jpg" type="image/x-icon">
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+  <title>Cadastre-se em Lumaris</title>
+</head>
+
+<body>
+
+
+  <div class="navbar">
+    <div>
+
+      <a class="logo" href="index.html">LUMARIS</a>
+
+    </div>
+    <div>
+      <hr>
+    </div>
+
+    <div class="navegacao">
+      <a href="index.html">Início</a><a href="simulador.html">Simulador</a><a href="login.html">Login</a><a
+        style="color: turquoise;">Cadastro</a>
+    </div>
+  </div>
+
+
+  <div class="login">
+
+    <div class="container">
+      <div class="card card-cadastro">
+        <h2>Bem-vindo(a)!</h2>
+        <div class="formulario">
+
+          <div class="campo">
+            <span>Razão social</span>
+            <input id="razao_input" type="text" placeholder="Razão social" />
+          </div>
+
+          <div class="campo">
+            <span>Nome:</span>
+            <input id="nome_input" type="text" placeholder="Seu nome" />
+          </div>
+
+          <div class="campo">
+            <span>E-mail:</span>
+            <input id="email_input" type="text" placeholder="meuemail@provedor.com" />
+          </div>
+
+          <div class="campo">
+            <span>CNPJ</span>
+            <input id="cnpj_input" type="text" placeholder="CNPJ da empresa" />
+          </div>
+
+          <div class="campo">
+            <span>Telefone</span>
+            <input id="telefone_input" type="text" placeholder="+55" />
+          </div>
+
+          <div class="campo">
+            <span>Celular</span>
+            <input id="celular_input" type="text" placeholder="+55" />
+          </div>
+
+          <div class="campo">
+            <span>Senha:</span>
+            <input id="senha_input" type="password" placeholder="******" />
+          </div>
+
+          <div class="campo">
+            <span>Confirmação da Senha:</span>
+            <input id="confirmacao_senha_input" type="password" placeholder="******" />
+          </div>
+
+        </div>
+      </div>
+
+      <div class="card card-cadastro">
+        <h2>Endereço</h2>
+        <div class="formulario">
+
+          <div class="campo">
+            <span>Estado</span>
+            <input id="estado_input" type="text" placeholder="São Paulo" />
+          </div>
+
+          <div class="campo">
+            <span>Cidade</span>
+            <input id="cidade_input" type="text" placeholder="Sorocaba" />
+          </div>
+
+          <div class="campo">
+            <span>Bairro</span>
+            <input id="bairro_input" type="text" placeholder="Seu bairro" />
+          </div>
+
+          <div class="campo">
+            <span>Rua</span>
+            <input id="rua_input" type="text" placeholder="Sua rua" />
+          </div>
+
+          <div class="campo">
+            <span>Número</span>
+            <input id="num_input" type="text" placeholder="123" />
+          </div>
+
+          <button class="botao" onclick="cadastrar()">Cadastrar</button>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="ondas-footer">
+      <div class="onda" id="onda"></div>
+      <div class="onda" id="onda2"></div>
+      <div class="onda" id="onda3"></div>
+      <div class="onda" id="onda4"></div>
+    </div>
+    <ul class="icons-footer">
+      <li><a href="https://github.com/grupo09_PI"><img src="images/github.png" alt=""></a></li>
+    </ul>
+
+    <p>&copy; Lumaris 2025 | Todos os direitos reservados</p>
+  </div>
+</body>
+
+
+</body>
+
+</html>
+
+<script src="js/app.js"></script>
+
+<script>
+  function finalizarAguardar() {
+
+  }
+
+function cadastrar() {
+    var razao = razao_input.value;
+    var nome = nome_input.value;
+    var email = email_input.value;
+    var cnpj = cnpj_input.value;
+    var tel = telefone_input.value;
+    var cel = celular_input.value;
+    var senha = senha_input.value;
+    var confir = confirmacao_senha_input.value;
+    var estado = estado_input.value;
+    var cidade = cidade_input.value;
+    var bairro = bairro_input.value;
+    var rua = rua_input.value;
+    var num = num_input.value;
+   
+    // Verificando se há algum campo em branco
+    if (
+      razao == "" ||
+      nome == "" ||
+      email == "" ||
+      cnpj == "" ||
+      tel == "" ||
+      cel == "" ||
+      senha == "" ||
+      confir == "" ||
+      estado == "" ||
+      cidade == "" ||
+      bairro == "" ||
+      rua == "" ||
+      num == ""
+      
+    ) {
+      cardErro.style.display = "block";
+      mensagem_erro.innerHTML =
+        "(Insira todos os dados requisitados!)";
+
+      finalizarAguardar();
+      return false;
+    }
+
+    // Enviando o valor da nova input
+    fetch("/usuarios/cadastrar", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        // crie um atributo que recebe o valor recuperado aqui
+        // Agora vá para o arquivo routes/usuario.js
+        nomeServer: nome,
+        emailServer: email,
+        senhaServer: senha,
+      }),
+    })
+      .then(function (resposta) {
+        console.log("resposta: ", resposta);
+
+        if (resposta.ok) {
+          cardErro.style.display = "block";
+
+          mensagem_erro.innerHTML =
+            "Cadastro finalizado.";
+
+          setTimeout(() => {
+            window.location = "login.html";
+          }, "2000");
+
+          limparFormulario();
+          finalizarAguardar();
+        } else {
+          throw "Erro ao realizar cadastro.";
+        }
+      })
+      .catch(function (resposta) {
+        console.log(`#ERRO: ${resposta}`);
+        finalizarAguardar();
+      });
+
+    return false;
+  }
+</script>
+</script>
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>

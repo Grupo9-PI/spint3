@@ -1,0 +1,253 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Playfair Display';
+}
+
+/*estiliza e transforma da logo icone para a logo em extenso*/
+
+.logo{
+    display: flex;
+    font-family: vogue;
+    font-size: 40px;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    align-items: center;
+}
+a{
+    text-decoration: none;
+    color: #434343;
+}
+
+hr{
+
+    width: 900px;
+}
+
+/*navbar, e "navegação" são os textos que levam os usuários para diferentes sessões da página */
+
+.navbar {
+    z-index: 2;
+    transition: 2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.navegacao{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 60px;
+}
+.navegacao a {
+    text-decoration: none;   
+    color: inherit;          
+}
+  
+
+/*junto com js, prende a logo e as opções de navegação no topo da tela*/
+.sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #ffffffe0;
+    transition: 2s;
+}
+
+.login {
+    display: flex;
+    height: 600px;
+    width: 100%;
+    background-image: 
+    linear-gradient(to right, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0)),
+    url('../assets/imgs/conchabanner.png');
+    background-size: cover;
+    margin-bottom: -100px;
+}
+
+.card-login {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+    backdrop-filter: blur(50px);
+    background: rgba(255, 255, 255, 0.15); 
+    border-radius: 12px;
+    gap: 20px;
+    width: 350px;
+    height: 50vh;
+    box-shadow: 5px 5px 5px #3640433e;
+    margin-top: 150px;
+}
+
+.login .container {
+    display: flex;
+    height: 80%;
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+    
+}
+
+.formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    width: 100%;
+}
+.formulario a {
+    text-decoration: none;   
+    color: turquoise;
+    font-weight: bolder;          
+}
+
+.campo {
+    display: flex;
+    flex-direction: column;
+}
+.campo input{
+    height: 35px;
+    border: solid 2px turquoise;
+    border-radius: 8px;
+}
+
+.campo span {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.botao {
+    background-color: turquoise;
+    border: none;
+    border-radius: 4px;
+    width: 50%; 
+    height: 50px;
+    font-weight: bolder;
+    font-size: large;
+    margin: auto; 
+}
+
+.botao:hover {
+    background-color: #009999;
+}
+
+body {
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+
+.footer {
+    display: flex;
+    position: relative;
+    width: 100%;
+    background: #8ee4f1;
+    min-height: 100px;
+    padding: 20px 50px;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 100px;
+}
+b{
+    color: teal;
+}
+
+.icons-footer{
+    position: relative;
+    display: flex;
+    margin-left: 0;
+    margin-right: auto;
+    flex-wrap: wrap;
+}
+
+.icons-footer li{
+    list-style: none;
+}
+
+.icons-footer li a{
+    font-size: 2em;
+    color: #fff;
+    margin: 0 10px;
+    display: inline-block;
+    transition: 0.5s;
+}
+p{ 
+    color: #fff;
+    text-align: center;
+    margin-top: 15px;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+
+/*pega a imagem da onda e posiciona ela*/
+
+.onda{
+    position: absolute;
+    top: -100px;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    background: url(../assets/imgs/onda-footer.png);
+    background-size: 1000px 100px;
+}
+
+/*
+    divide a imagem em 4 ondas e faz elas infinitamente percorrerem a tela. 
+    também muda a opacidade para parecerem ondas diferentes.
+
+*/
+
+
+.onda#onda{
+    z-index: 1000;
+    opacity: 1;
+    bottom: 0;
+    animation: animateOnda 4s linear infinite;
+}
+
+.onda#onda2{
+    z-index: 999;
+    opacity: 0.5;
+    bottom: 10px;
+    animation: animateOnda2 4s linear infinite;
+}
+
+.onda#onda3{
+    z-index: 1000;
+    opacity: 0.2;
+    bottom: 15px;
+    animation: animateOnda 3s linear infinite;
+}
+
+.onda#onda4{
+    z-index: 999;
+    opacity: 0.7;
+    bottom: 20px;
+    animation: animateOnda2 3s linear infinite;
+}
+
+/*muda de fato a posição da foto da onda*/
+
+@keyframes animateOnda{
+    0%{
+        background-position-x: 1000px;
+    }
+    100%{
+        background-position-x: 0px;
+    }
+}
+
+@keyframes animateOnda2{
+    0%{
+        background-position-x: 0px;
+    }
+    100%{
+        background-position-x: 1000px;
+    }
+}
+/*faz os itens do redapé pularem quando passa o  mouse por cima*/
+.icons-footer li a:hover{
+    transform: translateY(-10px);
+}
+ 

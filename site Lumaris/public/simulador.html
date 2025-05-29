@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulador Financeiro</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+    <link rel="shortcut icon" href="./images/Lumaris.jpg" type="image/x-icon">
+</head>
+
+<body>
+    <div class="navbar">
+        <div>
+            <a class="logo" href="index.html">LUMARIS</a>
+        </div>
+        <div>
+            <hr>
+        </div>
+        <div class="navegacao">
+            <a href="index.html">Início</a><a href="simulador.html" style="color: turquoise;">Simulador</a><a
+                href="login.html">Login</a><a href="cadastro.html">Cadastro</a>
+        </div>
+    </div>
+    <div class="simulador">
+        <div class="container">
+            <div class="card card-simulador">
+                <div class="formulario">
+                    <h1>Simulador Financeiro</h1>
+                    <div class="campo">
+                        Quantas instalações de ostras você possui? <br>
+                        <input type="number" id="input_qtdInstalacoes" placeholder="0">
+                    </div>
+                    <div class="campo">
+                        Em média, quantas ostras cada instalação possui? <br>
+                        <input type="number" id="input_qtdOstras" placeholder="0">
+                    </div>
+                    <div class="campo">
+                        Aproximadamente, quantos quilogramas de pérola é extraído por colheita? <br>
+                        <input type="number" id="input_kg" placeholder="0">
+                    </div>
+                    <div class="campo">
+                        Qual o preço do quilograma de pérola?
+                        <input type="number" id="input_precokg" placeholder="0">
+                    </div>
+                    <button onclick="simular()" class="botao">Simular</button>
+                </div>
+                <div id="div_mensagem" class="texto"></div>
+            </div>
+        </div>
+    </div>
+    
+        <div class="footer">
+            <div class="ondas-footer">
+                <div class="onda" id="onda"></div>
+                <div class="onda" id="onda2"></div>
+                <div class="onda" id="onda3"></div>
+                <div class="onda" id="onda4"></div>
+            </div>
+
+            <p>&copy; Lumaris 2025 | Todos os direitos reservados</p>
+        </div>
+</body>
+
+</html>
+<script src="js/app.js"></script>
+<script>
+    function simular() {
+        var instalacao = Number(input_qtdInstalacoes.value);
+        var ostras = Number(input_qtdOstras.value);
+        var kg = Number(input_kg.value);
+        var precokg = Number(input_precokg.value);
+        var mensagem = ``;
+    
+        // Validações
+        if (
+            isNaN(instalacao) || isNaN(ostras) || isNaN(kg) || isNaN(precokg) ||
+            instalacao <= 0 || ostras <= 0 || kg <= 0 || precokg <= 0
+        ) {
+            if (isNaN(instalacao) || instalacao <= 0) {
+                input_qtdInstalacoes.style.borderColor = '#e74c3c';
+            }
+            if (isNaN(ostras) || ostras <= 0) {
+                input_qtdOstras.style.borderColor = '#e74c3c';
+            }
+            if (isNaN(kg) || kg <= 0) {
+                input_kg.style.borderColor = '#e74c3c';
+            }
+            if (isNaN(precokg) || precokg <= 0) {
+                input_precokg.style.borderColor = '#e74c3c';
+            }
+            Toastify({
+                text: "Insira valores válidos",
+                duration: 3000,
+                style: {
+                    background: "linear-gradient(to right, #ac2121, #d62424)",
+                },
+            }).showToast();
+            div_mensagem.innerHTML = "";
+            return;
+        }
+    
+        // Total das ostras na fazenda
+        var totalOstras = ostras * instalacao;
+    
+        // Taxa de mortalidade sem monitoramento (78% morrem, 22% sobrevivem)
+        var ostraSobra = totalOstras * 0.22;
+        var morteOstra = totalOstras - ostraSobra;
+    
+        // Valor bruto da colheita total (todas as ostras geram X kg de pérola)
+        var valorColheita = kg * precokg;
+    
+        // Sem monitoramento: só 22% da produção
+        var valorSemMonitoramento = valorColheita * 0.22;
+    
+        // Com monitoramento: 70% das ostras que morreriam são salvas
+        var ostrasSobreviventes = morteOstra * 0.7;
+        var totalOstrasMonitoradas = ostraSobra + ostrasSobreviventes;
+    
+        // Conversão proporcional de ostras em kg
+        var proporcaoKgPorOstra = kg / totalOstras;
+        var kgMonitorado = totalOstrasMonitoradas * proporcaoKgPorOstra;
+    
+        // Valor bruto com monitoramento
+        var valorMonitorado = kgMonitorado * precokg;
+    
+        // Lucro extra gerado pelo uso do sistema
+        var lucroExtra = valorMonitorado - valorSemMonitoramento;
+    
+        // Custo estimado do serviço de monitoramento
+        var custoMonitoramento = 3000;
+    
+        // Retorno sobre o investimento (ROI)
+        var roi = ((lucroExtra - custoMonitoramento) / custoMonitoramento) * 100;
+    
+        // Simulação para 3 anos (3 colheitas)
+        var ciclos = 3;
+        var receitaTotalMonitorada = valorMonitorado * ciclos;
+    
+        // Mensagem final para o cliente
+        mensagem = `
+    Sua fazenda possui um total de 
+    <span style="font-weight: bold; color: blue; font-size: large">${totalOstras}</span> ostras instaladas. <span style="font-weight: bold;">Sem o uso de monitoramento</span>, estima-se que apenas <span style="font-weight: bold; font-size: large">22%</span> dessas ostras sobreviveriam após o ciclo de cultivo, resultando em cerca de 
+    <span style="font-weight: bold; color: red;">${ostraSobra.toFixed(0)}</span> unidades aproveitadas.
+    <br><br>
+    
+    Com nosso sistema de monitoramento, conseguimos aumentar a taxa de sobrevivência em <span style="font-weight: bold;">até 70% </span>, o que representa aproximadamente 
+    <span style="font-weight: bold; color: green;">${ostrasSobreviventes.toFixed(0)}</span> ostras salvas.
+    <br><br>
+    
+    Isso eleva a quantidade de ostras aproveitadas para 
+    <span style="font-weight: bold; color: blue ;">${totalOstrasMonitoradas.toFixed(0)}</span>.
+    <br><br>
+    
+    O <span style="font-weight: bold;">valor bruto </span> de uma colheita 
+    <span style="font-weight: bold;">sem monitoramento</span> seria de 
+    <span style="font-weight: bold; color: #e74c3c;">R$${valorSemMonitoramento.toLocaleString('pt-br', { minimumFractionDigits: 2 })}</span>, 
+    enquanto <span style="font-weight: bold;">com nosso sistema</span> esse valor pode chegar a 
+    <span style="font-weight: bold; color: green;">R$${valorMonitorado.toLocaleString('pt-br', { minimumFractionDigits: 2 })}</span>.
+    Que representa um lucro adicional de 
+    <span style="font-weight: bold; color: green;">R$${lucroExtra.toLocaleString('pt-br', { minimumFractionDigits: 2 })}</span> por colheita.
+    <br><br>
+    
+    Ao longo de três ciclos de colheita, o sistema pode gerar uma receita total de 
+    <span style="font-weight: bold; color: green;">R$${receitaTotalMonitorada.toLocaleString('pt-br', { minimumFractionDigits: 2 })}</span>.
+    <br><br>
+    
+    <span style="color: black; font-style: italic; font-size: 0.9em;">
+    Valores calculados com base nos dados fornecidos. O desempenho real pode variar conforme condições ambientais e práticas de manejo.
+    </span>
+    `;
+    
+        div_mensagem.innerHTML = mensagem;
+    }
+    </script>
+    
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
