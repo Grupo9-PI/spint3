@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,26 +9,28 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <title>Entre em Lumaris</title>
 </head>
+
 <body>
 
     <div class="navbar">
         <div>
-            
+
             <a class="logo" href="index.html">LUMARIS</a>
-            
+
         </div>
         <div>
             <hr>
         </div>
-        
+
         <div class="navegacao">
-            <a href="index.html">Início</a><a href="simulador.html">Simulador</a><a style="color: turquoise;">Login</a><a href="cadastro.html">Cadastro</a>
+            <a href="index.html">Início</a><a href="simulador.html">Simulador</a><a
+                style="color: turquoise;">Login</a><a href="cadastro.html">Cadastro</a>
         </div>
     </div>
-    
+
 
     <div class="login">
-  
+
         <div class="container">
 
             <div class="card card-login">
@@ -44,20 +47,16 @@
                         <span>Senha:</span>
                         <input id="senha_input" type="password" placeholder="******">
                     </div>
-                    
+
                     <button class="botao" onclick="entrar()">Entrar</button>
                     <span>Não tem conta? <a href="cadastro.html">Cadastre-se!</a></span>
                     <a href="redefinirSenha.html">Redefinir senha</a>
-
                 </div>
-
             </div>
-
         </div>
-
     </div>
 
-    
+
     <div class="footer">
         <div class="ondas-footer">
             <div class="onda" id="onda"></div>
@@ -66,85 +65,85 @@
             <div class="onda" id="onda4"></div>
         </div>
     </div>
-</body>
-</html>
+<div id="cardErro" style="display:none; color: red; margin-bottom: 10px;">
+    <span id="mensagem_erro"></span>
+</div>
+
 <script src="js/app.js"></script>
 
 
-</body>
-</html>
 
 <script>
+    var cardErro = document.getElementById("cardErro");
+    var mensagem_erro = document.getElementById("mensagem_erro");
+    var email_input = document.getElementById("email_input");
+    var senha_input = document.getElementById("senha_input");
 
-function entrar() {
+    function aguardar() {
+        console.log("Aguardando...");
+    }
+
+    function finalizarAguardar(mensagem) {
+        console.log("Finalizado aguardar.");
+        if (mensagem) {
+            mensagem_erro.innerHTML = mensagem;
+            cardErro.style.display = "block";
+        }
+    }
+
+    function entrar() {
         aguardar();
 
         var emailVar = email_input.value;
         var senhaVar = senha_input.value;
 
         if (emailVar == "" || senhaVar == "") {
-            cardErro.style.display = "block"
-            mensagem_erro.innerHTML = "(Mensagem de erro para todos os campos em branco)";
+            cardErro.style.display = "block";
+            mensagem_erro.innerHTML = "Preencha todos os campos!";
             finalizarAguardar();
             return false;
-        }
-        else {
-            setInterval(sumirMensagem, 5000)
+        } else {
+            setTimeout(sumirMensagem, 5000);
         }
 
-        console.log("FORM LOGIN: ", emailVar);
-        console.log("FORM SENHA: ", senhaVar);
-
-        fetch("/usuarios/autenticar", {
+        fetch("/empresa/autenticar", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({
-                emailServer: emailVar,
-                senhaServer: senhaVar
-            })
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ emailServer: emailVar, senhaServer: senhaVar })
         }).then(function (resposta) {
-            console.log("ESTOU NO THEN DO entrar()!")
-
             if (resposta.ok) {
-                console.log(resposta);
-
                 resposta.json().then(json => {
-                    console.log(json);
-                    console.log(JSON.stringify(json));
                     sessionStorage.EMAIL_USUARIO = json.email;
-                    sessionStorage.NOME_USUARIO = json.nome;
-                    sessionStorage.SENHA_USUARIO=json.senha
-                    sessionStorage.ID_USUARIO = json.id;
+                    sessionStorage.NOME_USUARIO = json.nomeFantasia;
+                    sessionStorage.SENHA_USUARIO = json.senha;
+                    sessionStorage.ID_USUARIO = json.idEmpresa || json.id;
 
-                    setTimeout(function () {
-                        window.location = "./dashboard/cards.html";
-                    }, 1000); // apenas para exibir o loading
-
+                    setTimeout(() => {
+                        window.location = "./dashboard.html";
+                    }, 1000);
                 });
-
             } else {
-
-                console.log("Houve um erro ao tentar realizar o login!");
-
                 resposta.text().then(texto => {
-                    console.error(texto);
-                    finalizarAguardar(texto);
+                    finalizarAguardar(texto || "Erro ao fazer login");
                 });
             }
-
         }).catch(function (erro) {
+            finalizarAguardar("Erro na conexão com o servidor.");
             console.log(erro);
-        })
+        });
 
         return false;
     }
 
     function sumirMensagem() {
-        cardErro.style.display = "none"
+        cardErro.style.display = "none";
     }
-
 </script>
 
+
+
 <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+</body>
+
+</html>

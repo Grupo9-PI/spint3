@@ -11,70 +11,54 @@
 </head>
 
 <body>
-
-
   <div class="navbar">
     <div>
-
       <a class="logo" href="index.html">LUMARIS</a>
-
     </div>
     <div>
       <hr>
     </div>
-
     <div class="navegacao">
-      <a href="index.html">Início</a><a href="simulador.html">Simulador</a><a href="login.html">Login</a><a
-        style="color: turquoise;">Cadastro</a>
+      <a href="index.html">Início</a>
+      <a href="simulador.html">Simulador</a>
+      <a href="login.html">Login</a>
+      <a href="#" style="color: turquoise;">Cadastro</a>
     </div>
   </div>
-
-
   <div class="login">
-
     <div class="container">
       <div class="card card-cadastro">
         <h2>Bem-vindo(a)!</h2>
         <div class="formulario">
 
           <div class="campo">
-            <span>Razão social</span>
+            <label for="razao_input">Razão social</label>
             <input id="razao_input" type="text" placeholder="Razão social" />
           </div>
 
           <div class="campo">
-            <span>Nome:</span>
+            <label for="nome_input">Nome:</label>
             <input id="nome_input" type="text" placeholder="Seu nome" />
           </div>
 
           <div class="campo">
-            <span>E-mail:</span>
-            <input id="email_input" type="text" placeholder="meuemail@provedor.com" />
-          </div>
-
-          <div class="campo">
-            <span>CNPJ</span>
+            <label for="cnpj_input">CNPJ</label>
             <input id="cnpj_input" type="text" placeholder="CNPJ da empresa" />
           </div>
 
           <div class="campo">
-            <span>Telefone</span>
-            <input id="telefone_input" type="text" placeholder="+55" />
+            <label for="email_input">E-mail:</label>
+            <input id="email_input" type="email" placeholder="meuemail@provedor.com" />
           </div>
 
           <div class="campo">
-            <span>Celular</span>
-            <input id="celular_input" type="text" placeholder="+55" />
+            <label for="senha_input">Senha:</label>
+            <input id="senha_input" type="password" placeholder="Digite sua senha" />
           </div>
 
           <div class="campo">
-            <span>Senha:</span>
-            <input id="senha_input" type="password" placeholder="******" />
-          </div>
-
-          <div class="campo">
-            <span>Confirmação da Senha:</span>
-            <input id="confirmacao_senha_input" type="password" placeholder="******" />
+            <label for="confirmacao_senha_input">Confirmação da Senha:</label>
+            <input id="confirmacao_senha_input" type="password" placeholder="Digite sua senha" />
           </div>
 
         </div>
@@ -85,31 +69,61 @@
         <div class="formulario">
 
           <div class="campo">
-            <span>Estado</span>
-            <input id="estado_input" type="text" placeholder="São Paulo" />
+            <label for="estado_input">Estado</label>
+            <select id="estado_input">
+              <option value="">Selecione um estado</option>
+              <option value="AC">Acre</option>
+              <option value="AL">Alagoas</option>
+              <option value="AP">Amapá</option>
+              <option value="AM">Amazonas</option>
+              <option value="BA">Bahia</option>
+              <option value="CE">Ceará</option>
+              <option value="DF">Distrito Federal</option>
+              <option value="ES">Espírito Santo</option>
+              <option value="GO">Goiás</option>
+              <option value="MA">Maranhão</option>
+              <option value="MT">Mato Grosso</option>
+              <option value="MS">Mato Grosso do Sul</option>
+              <option value="MG">Minas Gerais</option>
+              <option value="PA">Pará</option>
+              <option value="PB">Paraíba</option>
+              <option value="PR">Paraná</option>
+              <option value="PE">Pernambuco</option>
+              <option value="PI">Piauí</option>
+              <option value="RJ">Rio de Janeiro</option>
+              <option value="RN">Rio Grande do Norte</option>
+              <option value="RS">Rio Grande do Sul</option>
+              <option value="RO">Rondônia</option>
+              <option value="RR">Roraima</option>
+              <option value="SC">Santa Catarina</option>
+              <option value="SP">São Paulo</option>
+              <option value="SE">Sergipe</option>
+              <option value="TO">Tocantins</option>
+            </select>
           </div>
 
+
           <div class="campo">
-            <span>Cidade</span>
+            <label for="cidade_input">Cidade</label>
             <input id="cidade_input" type="text" placeholder="Sorocaba" />
           </div>
 
           <div class="campo">
-            <span>Bairro</span>
+            <label for="bairro_input">Bairro</label>
             <input id="bairro_input" type="text" placeholder="Seu bairro" />
           </div>
 
           <div class="campo">
-            <span>Rua</span>
+            <label for="rua_input">Rua</label>
             <input id="rua_input" type="text" placeholder="Sua rua" />
           </div>
 
           <div class="campo">
-            <span>Número</span>
+            <label for="num_input">Número</label>
             <input id="num_input" type="text" placeholder="123" />
           </div>
 
-          <button class="botao" onclick="cadastrar()">Cadastrar</button>
+          <button class="botao" type="submit" onclick="cadastrar()">Cadastrar</button>
 
         </div>
       </div>
@@ -125,105 +139,104 @@
       <div class="onda" id="onda4"></div>
     </div>
     <ul class="icons-footer">
-      <li><a href="https://github.com/grupo09_PI"><img src="images/github.png" alt=""></a></li>
+      <li><a href="https://github.com/grupo09_PI"><img src="./assets/imgs/github.png" alt="Logo do github"></a></li>
     </ul>
 
     <p>&copy; Lumaris 2025 | Todos os direitos reservados</p>
   </div>
-</body>
+
+  <script src="js/app.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+  <script>
+    function limparFormulario() {
+      document.querySelectorAll('input').forEach(input => input.value = '');
+    }
+
+    function mostrarToast(mensagem, cor = "linear-gradient(to right, #00b09b, #96c93d)") {
+      Toastify({
+        text: mensagem,
+        duration: 3000,
+        close: true,
+        gravity: "top",
+        position: "right",
+        backgroundColor: cor
+      }).showToast();
+    }
+
+    function cadastrar() {
+      const razaoVar = document.getElementById("razao_input").value;
+      const nomeVar = document.getElementById("nome_input").value;
+      const cnpjVar = document.getElementById("cnpj_input").value;
+      const emailVar = document.getElementById("email_input").value;
+      const senhaVar = document.getElementById("senha_input").value;
+      const confirmacao_senhaVar = document.getElementById("confirmacao_senha_input").value;
+      const estadoVar = document.getElementById("estado_input").value;
+      const cidadeVar = document.getElementById("cidade_input").value;
+      const bairroVar = document.getElementById("bairro_input").value;
+      const ruaVar = document.getElementById("rua_input").value;
+      const numVar = document.getElementById("num_input").value;
+
+      if (
+        razaoVar == "" ||
+        nomeVar == "" ||
+        cnpjVar == "" ||
+        emailVar == "" ||
+        senhaVar == "" ||
+        confirmacao_senhaVar == "" ||
+        estadoVar == "" ||
+        cidadeVar == "" ||
+        bairroVar == "" ||
+        ruaVar == "" ||
+        numVar == ""
+      ) {
+        mostrarToast("Insira todos os dados requisitados!", "linear-gradient(to right, #ff5f6d, #ffc371)");
+        return false;
+      }
+
+      if (senhaVar !== confirmacao_senhaVar) {
+        mostrarToast("As senhas não coincidem.", "linear-gradient(to right, #ff5f6d, #ffc371)");
+        return false;
+      }
+
+      fetch("/empresa/cadastrar-com-endereco", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          nomeServer: nomeVar,
+          emailServer: emailVar,
+          senhaServer: senhaVar,
+          razaoSocialServer: razaoVar,
+          cnpjServer: cnpjVar,
+          estadoServer: estadoVar,
+          cidadeServer: cidadeVar,
+          bairroServer: bairroVar,
+          ruaServer: ruaVar,
+          numeroServer: numVar
+        })
+      })
+        .then(response => {
+          if (!response.ok) {
+            throw new Error("Erro na requisição: " + response.status);
+          }
+          return response.json();
+        })
+        .then(data => {
+          mostrarToast("Cadastro realizado com sucesso!");
+          limparFormulario();
+        })
+        .catch(error => {
+          console.error("Erro:", error);
+          mostrarToast("Erro ao cadastrar: " + error.message, "linear-gradient(to right, #ff5f6d, #ffc371)");
+        });
+
+      return false;
+    }
+  </script>
 
 
 </body>
 
 </html>
-
-<script src="js/app.js"></script>
-
-<script>
-  function finalizarAguardar() {
-
-  }
-
-function cadastrar() {
-    var razao = razao_input.value;
-    var nome = nome_input.value;
-    var email = email_input.value;
-    var cnpj = cnpj_input.value;
-    var tel = telefone_input.value;
-    var cel = celular_input.value;
-    var senha = senha_input.value;
-    var confir = confirmacao_senha_input.value;
-    var estado = estado_input.value;
-    var cidade = cidade_input.value;
-    var bairro = bairro_input.value;
-    var rua = rua_input.value;
-    var num = num_input.value;
-   
-    // Verificando se há algum campo em branco
-    if (
-      razao == "" ||
-      nome == "" ||
-      email == "" ||
-      cnpj == "" ||
-      tel == "" ||
-      cel == "" ||
-      senha == "" ||
-      confir == "" ||
-      estado == "" ||
-      cidade == "" ||
-      bairro == "" ||
-      rua == "" ||
-      num == ""
-      
-    ) {
-      cardErro.style.display = "block";
-      mensagem_erro.innerHTML =
-        "(Insira todos os dados requisitados!)";
-
-      finalizarAguardar();
-      return false;
-    }
-
-    // Enviando o valor da nova input
-    fetch("/usuarios/cadastrar", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        // crie um atributo que recebe o valor recuperado aqui
-        // Agora vá para o arquivo routes/usuario.js
-        nomeServer: nome,
-        emailServer: email,
-        senhaServer: senha,
-      }),
-    })
-      .then(function (resposta) {
-        console.log("resposta: ", resposta);
-
-        if (resposta.ok) {
-          cardErro.style.display = "block";
-
-          mensagem_erro.innerHTML =
-            "Cadastro finalizado.";
-
-          setTimeout(() => {
-            window.location = "login.html";
-          }, "2000");
-
-          limparFormulario();
-          finalizarAguardar();
-        } else {
-          throw "Erro ao realizar cadastro.";
-        }
-      })
-      .catch(function (resposta) {
-        console.log(`#ERRO: ${resposta}`);
-        finalizarAguardar();
-      });
-
-    return false;
-  }
-</script>
-</script>
-<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>

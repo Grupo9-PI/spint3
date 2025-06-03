@@ -26,7 +26,7 @@
     <div class="dash">
       <div class="nav">
         <div class="titulo">
-          Bem-vindo, <span style="color: teal;">Maré Branca</span>!
+          Bem-vindo, <span id="nomeUsuario" style="color: teal;">Maré Branca</span>
         </div>
         <div class="options">
 
@@ -100,7 +100,6 @@
       </div>
     </div>
 
-    <!-- Modal -->
     <div id="myModal" class="modal">
       <div class="modal-content">
         <span class="close" onclick="closeModal()">&times;</span>
@@ -111,7 +110,14 @@
   </div>
 
   <script>
-    // Gráfico de linha
+  const nome = sessionStorage.NOME_USUARIO || "Maré Branca";
+
+  const nomeUsuarioSpan = document.getElementById('nomeUsuario');
+  
+  nomeUsuarioSpan.textContent = nome;
+</script>
+
+  <script>
     const ctx = document.getElementById('myChart');
     new Chart(ctx, {
       type: 'line',
@@ -134,10 +140,8 @@
       }
     });
 
-
     const ctx2 = document.getElementById('myChart2');
 
-    // Horários do dia (de 00h a 23h)
     const horas = [
       '00h', '01h', '02h', '03h', '04h', '05h',
       '06h', '07h', '08h', '09h', '10h', '11h',
@@ -145,7 +149,6 @@
       '18h', '19h', '20h', '21h', '22h', '23h'
     ];
 
-    // Dados de luminosidade (manual para cada hora)
     const luminosidade = [
       210, 250, 240, 389, 370, 450, 800, 860, 821, 807,
       760, 750, 824, 920, 850, 750, 720, 750, 470, 455,
@@ -203,11 +206,6 @@
     });
 
 
-    /*faça 2 linhas*/
-    /*entre 600 e 900 CLARO*/
-    /*entre 100 e 500 ESCURO*/
-
-
     const ctx4 = document.getElementById('myDonutChart');
 
     new Chart(ctx4, {
@@ -244,300 +242,7 @@
         }
       }]
     });
-
-
-    function openModal(tipo) {
-      const modal = document.getElementById("myModal");
-      const title = document.getElementById("modal-title");
-      const text = document.getElementById("modal-text");
-      var mensagemTemporizador = `<div class="modal-conteudo">
-    <h2>Tempo Restante na LUZ/ESCURO</h2>
-    <p>Este temporizador conta o tempo restante de exposição à luz para as ostras em uma fazenda. Dependendo do ciclo de luminosidade, as ostras podem ter um período em que precisam estar expostas à luz e outro período em que devem estar no escuro.</p>
-    <p><strong>Exemplo de uso:</strong> Esse temporizador ajuda a garantir que as ostras sejam expostas a ciclos ideais de luz e escuridão para otimizar o crescimento e a saúde delas, seguindo as recomendações de práticas agrícolas específicas.</p>
-  </div>`;
-      var mensagemLucro = `<div class="modal-conteudo">
-    <h2>Lucro do Mês Passado (BRL)</h2>
-    <p>Exibe o lucro estimado do último mês, com base na produção de ostras e os custos operacionais. Ele é útil para avaliar o desempenho financeiro da fazenda e o impacto de variáveis como luminosidade na produção.</p>
-    <p><strong>Exemplo de uso:</strong> O lucro apresentado aqui é um reflexo direto de como o controle das condições de cultivo, como a luminosidade, impactou a produção e, consequentemente, as finanças da fazenda.</p>
-  </div>`;
-      var mensagemEconomia = ` <div class="modal-conteudo">
-    <h2>Economia Estimada por Monitoramento</h2>
-    <p>Esta seção mostra a economia estimada que pode ser gerada com o monitoramento das condições de luminosidade nas fazendas de ostras. A tecnologia pode ajudar a otimizar o processo de cultivo, reduzindo custos e aumentando a produção.</p>
-    <p><strong>Exemplo de uso:</strong> A economia apresentada aqui é baseada na redução de perdas de produção através do controle de luminosidade e outras variáveis ambientais monitoradas pelas ferramentas do sistema.</p>
-  </div>`;
-      var mensagemDonut = `<div class="modal-conteudo">
-    <h2>Taxa de Sobrevivência das Ostras</h2>
-    <p>O gráfico de donut é uma variação do gráfico de pizza, mas com um centro vazio. Ele é utilizado para mostrar a composição de uma variável em partes proporcionais, ideal para visualizar taxas.</p>
-    <p><strong>Exemplo de uso:</strong> Este gráfico mostra a taxa de sobrevivência das ostras em relação à quantidade total plantada. É útil para monitorar a saúde das ostras nas fazendas e identificar qualquer problema no ciclo de vida delas.</p>
-  </div>`;
-      var mensagemBarras = ` <div class="modal-conteudo">
-    <h2>Gráfico de Barras</h2>
-    <p>O gráfico de barras é ideal para comparar dados entre diferentes categorias. Ele apresenta os valores de forma visualmente clara, permitindo uma comparação fácil e rápida.</p>
-    <p><strong>Exemplo de uso:</strong> Neste gráfico, você pode comparar a quantidade de luminosidade detectada na sua fazendas de ostras, ajudando a identificar quais locais estão recebendo mais ou menos luz e sua relação com a produção ao longo do dia.</p>
-  </div>`;
-      var mensagemLinhas = `
-  <div class="modal-conteudo">
-    <h2>Gráfico de Linhas</h2>
-    <p>O gráfico de linhas é utilizado para exibir a evolução dos dados ao longo do tempo. Este gráfico é excelente para identificar tendências e padrões temporais, como crescimento ou declínio em um período específico.</p>
-    <p><strong>Exemplo de uso:</strong> Você pode observar como a luminosidade na sua fazenda varia ao longo do dia ou da semana, o que pode ajudar a entender o impacto da luminosidade na produção de ostras.</p>
-  </div>`;
-      var mensagemInstabilidade = `
-      <div class="area-sensores">
-  <div class="sensor-list">
-
-    <div class="sensor adequada-borda">
-      <h2>Sensor LDR 1</h2>
-      <div class="description">Desempenho estável com iluminação constante.</div>
-      <div class="report adequada">Instabilidade: Adequada</div>
-    </div>
-
-    <div class="sensor adequada-borda">
-      <h2>Sensor LDR 2</h2>
-      <div class="description">Desempenho estável com iluminação constante.</div>
-      <div class="report adequada">Instabilidade: Adequada</div>
-    </div>
-
-    <div class="sensor critica-borda"">
-      <h2>Sensor LDR 3</h2>
-      <div class="description">Sensível, mas sofre interferência de ruído elétrico.</div>
-      <div class="report critica">Instabilidade: Crítica</div>
-    </div>
-
-    <div class="sensor adequada-borda">
-      <h2>Sensor LDR 4</h2>
-      <div class="description">Desempenho estável com iluminação constante.</div>
-      <div class="report adequada">Instabilidade: Adequada</div>
-    </div>
-
-    <div class="sensor adequada-borda">
-      <h2>Sensor LDR 5</h2>
-      <div class="description">Desempenho estável com iluminação constante.</div>
-      <div class="report adequada">Instabilidade: Adequada</div>
-    </div>
-
-    <div class="sensor adequada-borda"">
-      <h2>Sensor LDR 6</h2>
-      <div class="description">Desempenho estável com iluminação constante.</div>
-      <div class="report adequada">Instabilidade: Adequada</div>
-    </div>
-
-    <div class="sensor adequada-borda">
-      <h2>Sensor LDR 7</h2>
-      <div class="description">Desempenho estável com iluminação constante.</div>
-      <div class="report adequada">Instabilidade: Adequada</div>
-    </div>
-
-    <div class="sensor comprometida-borda">
-      <h2>Sensor LDR 8</h2>
-      <div class="description">Oscilações perceptíveis ao anoitecer.</div>
-      <div class="report comprometida">Instabilidade: Comprometida</div>
-    </div>
-
-    <div class="sensor adequada-borda"">
-      <h2>Sensor LDR 9</h2>
-      <div class="description">Desempenho estável com iluminação constante.</div>
-      <div class="report adequada">Instabilidade: Adequada</div>
-    </div>
-
-    <div class="sensor adequada-borda">
-      <h2>Sensor LDR 10</h2>
-      <div class="description">Desempenho estável com iluminação constante.</div>
-      <div class="report adequada">Instabilidade: Adequada</div>
-    </div>
-
-    <div class="sensor comprometida-borda">
-      <h2>Sensor LDR 11</h2>
-      <div class="description">Performance incoerente sob luz difusa.</div>
-      <div class="report comprometida">Instabilidade: Comprometida</div>
-    </div>
-
-    <div class="sensor adequada-borda">
-      <h2>Sensor LDR 12</h2>
-      <div class="description">Desempenho estável com iluminação constante.</div>
-      <div class="report adequada">Instabilidade: Adequada</div>
-    </div>
-
-    <div class="sensor adequada-borda">
-      <h2>Sensor LDR 13</h2>
-      <div class="description">Desempenho estável com iluminação constante.</div>
-      <div class="report adequada">Instabilidade: Adequada</div>
-    </div>
-
-  </div>
-  </div>
-`;
-      var mensagemIdeal = `<p>
-
-  A qualidade da luz disponível na fazenda influencia diretamente a saúde e o crescimento das ostras. Nosso sistema classifica a luminosidade em três níveis:<br><br>
-
-  ✅ <strong>Ideal:</strong> A luz está na faixa recomendada para o cultivo, garantindo condições ideais para a fotossíntese do fitoplâncton, alimento natural das ostras.<br><br>
-
-  ⚠️ <strong>Precário:</strong> A luminosidade está abaixo do necessário. Isso pode afetar o crescimento das ostras e sinaliza necessidade de intervenção (ex: reposicionamento de sensores, limpeza de estruturas).<br><br>
-
-  ❌ <strong>Excessivo:</strong> A luz está muito intensa. Isso pode aquecer demais a água, causar estresse nos moluscos ou favorecer o crescimento de organismos indesejados.<br><br>
-
-  Mantenha o ambiente sob monitoramento constante para evitar prejuízos à produção.
-</p>
-`;
-      var mensagemMedia = `<p>
-
-  Este valor representa a média da luminosidade coletada em tempo real por todos os sensores espalhados pela fazenda de ostras.<br><br>
-
-  A <b>média</b> é calculada automaticamente com base nas últimas leituras recebidas, oferecendo uma visão geral do ambiente luminoso em toda a fazenda.<br><br>
-</p>
-`;
-      var mensagemRisco = `<div style="font-family: sans-serif; max-width: 500px; margin-top: 20px; line-height: 1.6;">
-  <p>
-    A escala de cores indica o <strong>grau de comprometimento dos sensores</strong>:
-  </p>
-
-  <ul style="list-style: none; padding-left: 0; margin-top: 10px;">
-    <li style="margin-bottom: 12px;">
-      <strong style="color: #4CAF50;">🟢 Verde — Funcionamento Normal:</strong><br>
-      Todos os sensores estão operando dentro dos parâmetros esperados, não há indícios de falha ou interferência nos dispositivos.
-    </li>
-    <li style="margin-bottom: 12px;">
-      <strong style="color: #FFC107;">🟡 Amarelo — Dados Inconsistentes:</strong><br>
-      Os sensores ainda estão ativos, mas os dados coletados apresentam padrões irregulares ou valores fora do esperado.
-    </li>
-    <li>
-      <strong style="color: #F44336;">🔴 Vermelho — Sensor Comprometido:</strong><br>
-      O sensor parou de funcionar corretamente. Ele está reportando apenas valores nulos, zerados ou completamente inválidos.
-    </li>
-  </ul>
-</div>
-
-`;
-
-      if (tipo === 'sensores') {
-        title.textContent = "Sensores em risco";
-        text.innerHTML = `${mensagemRisco}`;
-      } else if (tipo === 'instabilidade') {
-        title.textContent = "Instabilidade Luminosa";
-        text.innerHTML = `${mensagemInstabilidade}`;
-      } else if (tipo === 'ideal') {
-        title.textContent = "Luminosidade Ideal";
-        text.innerHTML = `${mensagemIdeal}`;
-      } else if (tipo == 'modal-linhas') {
-        text.innerHTML = `${mensagemLinhas}`;
-      } else if (tipo == 'modal-barras') {
-        text.innerHTML = `${mensagemBarras}`;
-      } else if (tipo == 'modal-donut') {
-        text.innerHTML = `${mensagemDonut}`;
-      } else if (tipo == 'modal-economia') {
-        text.innerHTML = `${mensagemEconomia}`;
-      } else if (tipo == 'modal-lucro') {
-        text.innerHTML = `${mensagemLucro}`;
-      } else if (tipo == 'modal-temporizador') {
-        text.innerHTML = `${mensagemTemporizador}`;
-      }
-
-      modal.style.display = "flex"; // Exibe o modal
-    }
-
-    // Função para fechar o modal
-    function closeModal() {
-      const modal = document.getElementById("myModal");
-      modal.style.display = "none"; // Esconde o modal
-    }
-
-    // Fechar o modal se clicar fora dele
-    window.onclick = function (event) {
-      const modal = document.getElementById("myModal");
-      if (event.target === modal) {
-        modal.style.display = "none";
-      }
-    }
-  </script>
-
-
-  <script>
-    function iniciarTemporizador(cicloHoras = 12) {
-      const display = document.getElementById('temporizador');
-      const estadoTexto = document.getElementById('estado');
-      const cicloMs = cicloHoras * 60 * 60 * 1000;
-
-      // Recupera as informações do localStorage
-      var fim = localStorage.getItem('fim');
-      var ultimoCheck = localStorage.getItem('ultimoCheck');
-      var emLuz = localStorage.getItem('emLuz') === 'true';
-
-      // Se não houver dado de "fim", iniciamos um novo ciclo
-      if (!fim) {
-        fim = Date.now() + cicloMs;
-        localStorage.setItem('fim', fim);
-      }
-
-      // Se não houver dado de "última verificação", iniciamos agora
-      if (!ultimoCheck) {
-        ultimoCheck = Date.now();
-        localStorage.setItem('ultimoCheck', ultimoCheck);
-      }
-
-      // Atualiza o estado de LUZ ou ESCURO
-      if (emLuz) {
-        estadoTexto.textContent = 'Alta Luminosidade';
-        estadoTexto.style.color = 'orange';
-        display.style.color = 'orange';
-
-      } else {
-        estadoTexto.textContent = 'Baixa Luminosidade';
-        estadoTexto.style.color = 'blue';
-        display.style.color = 'blue';
-
-      }
-
-      // Atualiza o temporizador a cada segundo
-      setInterval(() => {
-        const agora = Date.now();
-        var elapsedTime = agora - ultimoCheck; // Tempo desde a última atualização
-        var restante = fim - agora; // Tempo restante
-
-        // Se o tempo acabar, reinicia o ciclo
-        if (restante <= 0) {
-          fim = Date.now() + cicloMs;
-          emLuz = !emLuz; // Alterna para LUZ ou ESCURO
-
-          // Atualiza o estado na tela
-          if (emLuz) {
-            estadoTexto.textContent = 'Alta Luminosidade';
-            estadoTexto.style.color = 'orange';
-            display.style.color = 'orange';
-          } else {
-            estadoTexto.textContent = 'Baixa Luminosidade';
-            estadoTexto.style.color = 'blue';
-            display.style.color = 'blue';
-
-          }
-
-          // Salva os novos dados no localStorage
-          localStorage.setItem('fim', fim);
-          localStorage.setItem('emLuz', emLuz);
-        }
-
-        // Atualiza o "último check" apenas quando o ciclo for reiniciado
-        if (restante <= 0) {
-          localStorage.setItem('ultimoCheck', Date.now());
-        }
-
-        // Formata o tempo restante corretamente
-        const horas = Math.floor(restante / (1000 * 60 * 60));
-        const minutos = Math.floor((restante % (1000 * 60 * 60)) / (1000 * 60));
-        const segundos = Math.floor((restante % (1000 * 60)) / 1000);
-
-        // Atualiza o display do temporizador
-        display.textContent =
-          String(horas).padStart(2, '0') + ':' +
-          String(minutos).padStart(2, '0') + ':' +
-          String(segundos).padStart(2, '0');
-
-      }, 1000);
-    }
-
-    // Inicia o temporizador quando a página for carregada
-    iniciarTemporizador();
-  </script>
-
+</script>
 
 
 </body>
