@@ -15,7 +15,8 @@ var app = express();
 
 var indexRouter = require("./src/routes/index");
 var empresaRouter = require("./src/routes/empresa");
-var enderecoRouter = require("./src/routes/endereco") 
+var enderecoRouter = require("./src/routes/endereco");
+var dashboardRouter = require("./src/routes/dashboard");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -26,6 +27,7 @@ app.use(cors());
 app.use("/", indexRouter);
 app.use("/empresa", empresaRouter);
 app.use("/endereco", enderecoRouter);
+app.use("/dashboard", dashboardRouter);
 
 app.listen(PORTA_APP, function () {
     console.log("\x1b[36m\x1b[3m%s\x1b[0m",`

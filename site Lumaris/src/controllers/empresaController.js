@@ -1,6 +1,12 @@
 var empresaModel = require("../models/empresaModel");
 var enderecoModel = require("../models/enderecoModel");
 
+
+
+
+
+
+
 function cadastrarComEndereco(req, res) {
     var { nomeServer, emailServer, senhaServer, razaoSocialServer, cnpjServer, 
           estadoServer, cidadeServer, bairroServer, ruaServer, numeroServer } = req.body;

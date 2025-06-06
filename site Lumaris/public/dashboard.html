@@ -2,41 +2,52 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Dashboard</title>
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-matrix@1.1.0/dist/chartjs-chart-matrix.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-gauge@4.0.0/dist/chartjs-chart-gauge.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-annotation@1.1.0"></script>
-  <link rel="stylesheet" href="./css/dashboard.css">
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="shortcut icon" href="./images/Lumaris.jpg" type="image/x-icon">
-  <link href="https://fonts.cdnfonts.com/css/ds-digital" rel="stylesheet">
+  <link rel="stylesheet" href="./css/dashboard.css" />
+  <link rel="stylesheet" href="./css/geral.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link rel="shortcut icon" href="./images/Lumaris.jpg" type="image/x-icon" />
+  <link href="https://fonts.cdnfonts.com/css/ds-digital" rel="stylesheet" />
 </head>
 
 <body>
+  <nav class="sidebar">
+    <a href="./dashboard.html" style="background-color: rgb(154, 187, 187);">
+            <span class="material-icons">dashboard</span>
+            Dashboard
+        </a>
+    <a href="./funcionarios.html">
+      <span class="material-icons">people</span>
+      Funcionários
+    </a>
+    <a href="./configuracoes.html">
+      <span class="material-icons">settings</span>
+      Configurações
+    </a>
+    <a href="./sensores.html">
+      <span class="material-icons">sensors</span>
+      Sensores
+    </a>
+    <a href="./login.html">
+      <span class="material-icons">logout</span>
+      Sair
+    </a>
+     
+  </nav>
 
   <div class="container">
-    <div>
-      <a href="./index.html">
-        <span class="material-icons" style="font-size: x-large;">arrow_back_ios</span>
-      </a>
-    </div>
     <div class="dash">
       <div class="nav">
         <div class="titulo">
           Bem-vindo, <span id="nomeUsuario" style="color: teal;">Maré Branca</span>
         </div>
-        <div class="options">
 
-          <span class="material-icons" style="font-size: xx-large;"><a href="./notificacoes.html"
-              style="margin-right: 20px; text-decoration: none;">notifications</a></span>
-
-          <a href="./login.html">
-            <span class="material-icons" style="font-size: xx-large;">logout</span>
-          </a>
-        </div>
       </div>
       <div class="socorro">
         <div class="alertas">
@@ -46,8 +57,7 @@
           </div>
           <div class="alerta instabilidade" onclick="openModal('instabilidade')">
             <div class="titulo">Instabilidade luminosa</div>
-            <div class="valor">Ver sensores <span class="material-icons" style="margin-left: 5px;">light_mode</span>
-            </div>
+            <div class="valor">Ver sensores <span class="material-icons" style="margin-left: 5px;">light_mode</span></div>
           </div>
           <div class="alerta luminosidade" onclick="openModal('ideal')">
             <div class="titulo">Luminosidade da fazenda</div>
@@ -56,7 +66,6 @@
         </div>
 
         <div class="graficos">
-
           <div class="linhas">
             <canvas id="myChart"></canvas>
             <span class="material-icons" onclick="openModal('modal-linhas')" style="font-size: large;">info</span>
@@ -65,36 +74,33 @@
           <div class="barras">
             <canvas id="myChart2"></canvas>
             <span class="material-icons" onclick="openModal('modal-barras')" style="font-size: large;">info</span>
-
           </div>
 
           <div class="donut" id="donut" style="height: 200px; width: 300px;">
             <p>Taxa de sobrevivência das ostras</p>
             <canvas id="myDonutChart"></canvas>
             <span class="material-icons" style="font-size: large;" onclick="openModal('modal-donut')">info</span>
-
           </div>
-          <div class="economia" style="height: 150px; width: 300px; ">
-            Economia estimada <span style="font-weight: bold;">por mês</span><br>
-            <h2 style="font-size: 33.7px;">R$ <span>142.610,56</span></h2>
-            <span class="material-icons" style="font-size: large; " onclick="openModal('modal-economia')">info</span>
 
+          <div class="economia" style="height: 150px; width: 300px;">
+            Economia estimada <span style="font-weight: bold;">por mês</span><br />
+            <h2 style="font-size: 33.7px;">R$ <span>142.610,56</span></h2>
+            <span class="material-icons" style="font-size: large;" onclick="openModal('modal-economia')">info</span>
           </div>
 
           <div class="lucro" style="height: 150px; width: 300px;">
-            Lucro do mês passado (BRL) <br>
+            Lucro do mês passado (BRL) <br />
             <h2><span style="color: rgb(97, 193, 97); font-size: 40px;">R$123.212,90</span></h2>
             <span class="material-icons" style="font-size: large;" onclick="openModal('modal-lucro')">info</span>
-
-
           </div>
+
           <div class="temporizador" style="height: 150px; width: 300px;">
-            Tempo restante das ostras em <span id="estado" style="color: orange; font-weight: bold;"> Alta
-              Luminsidade</span><br>
-            <h1><span id="temporizador" style="font-family: 'DS-digital', sans-serif; font-size: 60px;">12:00:00</span>
+            Tempo restante das ostras em
+            <span id="estado" style="color: orange; font-weight: bold;"> Alta Luminsidade</span><br />
+            <h1>
+              <span id="temporizador" style="font-family: 'DS-digital', sans-serif; font-size: 60px;">12:00:00</span>
             </h1>
             <span class="material-icons" style="font-size: large;" onclick="openModal('modal-temporizador')">info</span>
-
           </div>
         </div>
       </div>
@@ -110,12 +116,10 @@
   </div>
 
   <script>
-  const nome = sessionStorage.NOME_USUARIO || "Maré Branca";
-
-  const nomeUsuarioSpan = document.getElementById('nomeUsuario');
-  
-  nomeUsuarioSpan.textContent = nome;
-</script>
+    const nome = sessionStorage.NOME_USUARIO || "Maré Branca";
+    const nomeUsuarioSpan = document.getElementById("nomeUsuario");
+    nomeUsuarioSpan.textContent = nome;
+  </script>
 
   <script>
     const ctx = document.getElementById('myChart');

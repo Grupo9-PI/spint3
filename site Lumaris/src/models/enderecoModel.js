@@ -8,6 +8,7 @@ function cadastrarEndereco(rua, numero, bairro, cidade, estado, fkEmpresa) {
     return database.executar(instrucaoSql);
 }
 
+
 module.exports = {
     cadastrarEndereco
 };

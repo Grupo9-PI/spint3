@@ -4,18 +4,6 @@
   --preto: black;
 }
 
-.nav {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-}
-
-body {
-  margin: 0;
-  font-family: 'Helvetica';
-  background-color: #f2f2f2;
-}
-
 a {
   color: inherit;
 }
@@ -39,18 +27,19 @@ a {
   flex-direction: column;
 }
 
-.area{
+.area {
   width: 100%;
   max-width: 800px;
   margin: 0 auto;
   padding: 16px;
   background-color: #f9f9f9;
   border-radius: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   max-height: 500px;
   overflow-y: auto;
   scrollbar-color: #d4aa70 #e4e4e4;
 }
+
 .area::-webkit-scrollbar {
   width: 8px;
 }
@@ -61,7 +50,7 @@ a {
 }
 
 
-.area-sensores{
+.area-sensores {
   height: 70vh;
   overflow: auto;
   scrollbar-color: #d4aa70 #e4e4e4;
@@ -81,10 +70,11 @@ a {
   padding: 12px 16px;
   margin-bottom: 12px;
   border-radius: 10px;
-  box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
   transition: background-color 0.3s;
 }
-.notificacao span{
+
+.notificacao span {
   margin-right: 10px;
 }
 
@@ -134,17 +124,18 @@ a {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  
+
 }
-.risco{
+
+.risco {
   border-right: 8px solid yellow;
 }
 
-.instabilidade{
+.instabilidade {
   border-right: 8px solid red;
 }
 
-.luminosidade{
+.luminosidade {
   border-right: 8px solid green;
 }
 
@@ -202,10 +193,12 @@ a {
 .barras canvas {
   width: 98% !important;
 }
+
 .linhas canvas {
   width: 98% !important;
 }
-.graficos .barras{
+
+.graficos .barras {
   flex: 0.5;
   min-width: 500px;
   min-height: 300px;
@@ -218,7 +211,7 @@ a {
   width: 100%;
 }
 
-.graficos .linhas{
+.graficos .linhas {
   flex: 0.5;
   min-height: 250px;
   min-width: 550px;
@@ -230,16 +223,8 @@ a {
   margin: 0 auto;
   width: 100%;
 }
-.graficos .economia{
-  flex: 1;
-  min-width: 20%;
-  max-height: 150px;
-  background-color: #fff;
-  border-radius: 8px;
-  padding: 16px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-}
-.graficos .temporizador{
+
+.graficos .economia {
   flex: 1;
   min-width: 20%;
   max-height: 150px;
@@ -249,7 +234,7 @@ a {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-.graficos .lucro{
+.graficos .temporizador {
   flex: 1;
   min-width: 20%;
   max-height: 150px;
@@ -259,7 +244,17 @@ a {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
-.graficos .donut{
+.graficos .lucro {
+  flex: 1;
+  min-width: 20%;
+  max-height: 150px;
+  background-color: #fff;
+  border-radius: 8px;
+  padding: 16px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.graficos .donut {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -273,9 +268,10 @@ a {
   padding: 16px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
-.graficos .donut p{
+
+.graficos .donut p {
   margin: 0;
-  
+
 }
 
 /* Modal */
@@ -313,27 +309,54 @@ a {
   gap: 1rem;
   overflow: auto;
 }
+
 .sensor {
   background: white;
   padding: 1rem;
   border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.08);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
 }
+
 .sensor h2 {
   margin: 0 0 0.5rem 0;
   font-size: 1.1rem;
 }
+
 .description {
   font-size: 0.95rem;
   color: #555;
 }
+
 .report {
   margin-top: 0.5rem;
   font-weight: bold;
 }
-.adequada { color: green; }
-.adequada-borda {border-left: 8px solid green;}
-.comprometida { color: orange; }
-.comprometida-borda{border-left: 8px solid orange;}
-.critica { color: red; }
-.critica-borda{border-left: 8px solid red;}
+
+/* Mantém o layout existente, só ajusta a dash para ocupar todo o espaço */
+.dash {
+  margin-left: 0;
+}
+
+.adequada {
+  color: green;
+}
+
+.adequada-borda {
+  border-left: 8px solid green;
+}
+
+.comprometida {
+  color: orange;
+}
+
+.comprometida-borda {
+  border-left: 8px solid orange;
+}
+
+.critica {
+  color: red;
+}
+
+.critica-borda {
+  border-left: 8px solid red;
+}

@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+
+    <link rel="stylesheet" href="./css/geral.css">
+    <link rel="stylesheet" href="./css/funcionarios.css">
+    <link rel="stylesheet" href="./css/modal.css">
+</head>
+
+<body>
+    <nav class="sidebar">
+        <a href="./dashboard.html">
+            <span class="material-icons">dashboard</span>
+            Dashboard
+        </a>
+        <a href="./funcionarios.html" style="background-color: rgb(148, 169, 169);">
+            <span class="material-icons">people</span>
+            Funcionários
+        </a>
+        <a href="./configuracoes.html">
+            <span class="material-icons">settings</span>
+            Configurações
+        </a>
+        <a href="./sensores.html">
+            <span class="material-icons">sensors</span>
+            Sensores
+        </a>
+        <a href="./login.html">
+            <span class="material-icons">logout</span>
+            Sair
+        </a>
+
+    </nav>
+    <div class="container">
+
+        <h2>Gerenciamento de Funcionarios</h2>
+
+        <div style="display: flex;">
+            <button id="abrirModal">Adicionar Funcionário</button><span class="material-icons">groupadd</span>
+        </div>
+        <div class="search-container">
+            <input type="text" name="search" placeholder="Search..">
+            <span class="material-icons">search</span>
+        </div>
+
+        <div class="area-user">
+            <table id="funcionarios">
+                <tr>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>tipo</th>
+                    <th>Supervisor</th>
+                    <th>Ações</th>
+                </tr>
+                <tr>
+                    <td>Alfreds Futterkiste</td>
+                    <td>maria.anders09@gmail.com</td>
+                    <td>Germany</td>
+                    <td>Francisco Chang</td>
+                    <td><span class="material-icons clicavel">edit</span></td>
+                </tr>
+                <tr>
+                    <td>Berglunds snabbköp</td>
+                    <td>christinaberglund@hotmail.com</td>
+                    <td>Sweden</td>
+                    <td>Francisco Chang</td>
+                    <td><span class="material-icons clicavel">edit</span></td>
+                </tr>
+                <tr>
+                    <td>Centro comercial Moctezuma</td>
+                    <td>Francisc0chang@live.com</td>
+                    <td>Mexico</td>
+                    <td>Francisco Chang</td>
+                    <td><span class="material-icons clicavel">edit</span></td>
+                </tr>
+                <tr>
+                    <td>Ernst Handel</td>
+                    <td>Rolandmendel@webmail.com</td>
+                    <td>Austria</td>
+                    <td>Francisco Chang</td>
+                    <td><span class="material-icons clicavel">edit</span></td>
+                </tr>
+                <tr>
+                    <td>Island Trading</td>
+                    <td>Helenbennett@proton.me</td>
+                    <td>UK</td>
+                    <td>Francisco Chang</td>
+                    <td><span class="material-icons clicavel">edit</span></td>
+                </tr>
+                <tr>
+                    <td>Königlich Essen</td>
+                    <td>Philipcramer@zoho.zo</td>
+                    <td>Germany</td>
+                    <td>Francisco Chang</td>
+                    <td><span class="material-icons clicavel">edit</span></td>
+                </tr>
+                <tr>
+                    <td>Laughing Bacchus Winecellars</td>
+                    <td>YoshiTannamuri12@yahoo.mail</td>
+                    <td>Canada</td>
+                    <td>Francisco Chang</td>
+                    <td><span class="material-icons clicavel">edit</span></td>
+                </tr>
+                <tr>
+                    <td>Magazzini Alimentari Riuniti</td>
+                    <td>Giovannirovelli@aol.com</td>
+                    <td>Italy</td>
+                    <td>Francisco Chang</td>
+                    <td><span class="material-icons clicavel">edit</span></td>
+                </tr>
+                <tr>
+                    <td>Sandro Menezes</td>
+                    <td>SimonCrowther@gmx.len</td>
+                    <td>UK</td>
+                    <td>Francisco Chang</td>
+                    <td><span class="material-icons clicavel">edit</span></td>
+                </tr>
+                <tr>
+                    <td>Paris spécialités</td>
+                    <td>Mariebertrand@proton.me</td>
+                    <td>France</td>
+                    <td>Francisco Chang</td>
+                    <td><span class="material-icons clicavel">edit</span></td>
+                </tr>
+            </table>
+        </div>
+        <div id="meuModal" class="modal">
+            <div class="modal-content">
+                <span class="close" id="fecharModal">&times;</span>
+                <h2>Cadastrar Usuário</h2>
+                <div style="display: flex;">
+                <h3 style="transform: translateY(15px);">Nome:</h3>
+                <input type="text" name="search" placeholder="Search..">
+                </div>
+                <div style="display: flex;">
+                <h3 style="transform: translateY(15px);">Email:</h3>
+                <input type="text" name="search" placeholder="Search..">
+                </div>
+                <div style="display: flex;">
+                <h3 style="transform: translateY(15px);">Senha:</h3>
+                <input type="text" name="search" placeholder="Search..">
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="./js/modal.js"></script>
+</body>
+
+</html>
