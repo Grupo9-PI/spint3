@@ -68,7 +68,7 @@ hr{
     align-items: flex-start;
     background-image: 
     linear-gradient(to right, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0)),
-    url(../assets/imgs/conchabanner2.png);
+    url(../assets/conchabanner2.png);
     height: 500px;
     width: 100%;
     background-size: cover;
