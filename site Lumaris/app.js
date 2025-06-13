@@ -17,6 +17,11 @@ var indexRouter = require("./src/routes/index");
 var empresaRouter = require("./src/routes/empresa");
 var enderecoRouter = require("./src/routes/endereco");
 var dashboardRouter = require("./src/routes/dashboard");
+var funcionarioRouter = require('./src/routes/funcionario');
+var galpaoRouter = require("./src/routes/galpao");
+var tanqueRouter = require("./src/routes/tanque");
+var sensorRouter = require("./src/routes/sensor");
+var capturaRouter = require("./src/routes/captura");
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -28,6 +33,11 @@ app.use("/", indexRouter);
 app.use("/empresa", empresaRouter);
 app.use("/endereco", enderecoRouter);
 app.use("/dashboard", dashboardRouter);
+app.use('/funcionario', funcionarioRouter);
+app.use("/galpao", galpaoRouter);
+app.use("/tanque", tanqueRouter);
+app.use("/sensor", sensorRouter);
+app.use("/captura", capturaRouter);
 
 app.listen(PORTA_APP, function () {
     console.log("\x1b[36m\x1b[3m%s\x1b[0m",`

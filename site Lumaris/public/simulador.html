@@ -34,7 +34,7 @@
                     </div>
                     <div class="campo">
                         Em média, quantas ostras cada instalação possui? <br>
-                        <input type="number" id="input_qtdOstras" placeholder="0">
+                        <input type="number" id="input_qtOstras" placeholder="0">
                     </div>
                     <div class="campo">
                         Aproximadamente, quantos quilogramas de pérola é extraído por colheita? <br>
@@ -68,7 +68,7 @@
 <script>
     function simular() {
         var instalacao = Number(input_qtdInstalacoes.value);
-        var ostras = Number(input_qtdOstras.value);
+        var ostras = Number(input_qtOstras.value);
         var kg = Number(input_kg.value);
         var precokg = Number(input_precokg.value);
         var mensagem = ``;
@@ -82,7 +82,7 @@
                 input_qtdInstalacoes.style.borderColor = '#e74c3c';
             }
             if (isNaN(ostras) || ostras <= 0) {
-                input_qtdOstras.style.borderColor = '#e74c3c';
+                input_qtOstras.style.borderColor = '#e74c3c';
             }
             if (isNaN(kg) || kg <= 0) {
                 input_kg.style.borderColor = '#e74c3c';

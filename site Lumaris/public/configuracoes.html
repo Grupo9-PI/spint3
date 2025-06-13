@@ -1,44 +1,424 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Configurações</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link rel="stylesheet" href="./css/geral.css" />
+  <style>
+    .hidden {
+      display: none;
+    }
 
-    <link rel="stylesheet" href="./css/geral.css">
+    form {
+      margin-bottom: 20px;
+      max-width: 400px;
+    }
+
+    label {
+      display: block;
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    input {
+      width: 100%;
+      padding: 6px;
+      margin-top: 4px;
+      box-sizing: border-box;
+    }
+
+    button {
+      margin-top: 10px;
+      padding: 8px 16px;
+    }
+
+    .delete-btn {
+      margin-top: 30px;
+      color: red;
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+  </style>
 </head>
 
 <body>
-    <nav class="sidebar">
-        <a href="./dashboard.html">
-            <span class="material-icons">dashboard</span>
-            Dashboard
-        </a>
-        <a href="./funcionarios.html">
-            <span class="material-icons">people</span>
-            Funcionários
-        </a>
-        <a href="./configuracoes.html" style="background-color: rgb(132, 183, 183);">
-            <span class="material-icons">settings</span>
-            Configurações
-        </a>
-        <a href="./sensores.html">
-            <span class="material-icons">sensors</span>
-            Sensores
-        </a>
-        <a href="./login.html">
-            <span class="material-icons">logout</span>
-            Sair
-        </a>
+  <nav class="sidebar">
+    <a href="./dashboard.html">
+      <span class="material-icons">dashboard</span>
+      Dashboard
+    </a>
+    <a href="./funcionarios.html">
+      <span class="material-icons">people</span>
+      Funcionários
+    </a>
+    <a href="./configuracoes.html" style="background-color: rgb(132, 183, 183);">
+      <span class="material-icons">settings</span>
+      Configurações
+    </a>
+    <a href="./galpao.html">
+      <img src="./assets/imgs/icon_tanque.png" style="height: 25px">
+      Galpões
+    </a>
+    <a href="./login.html">
+      <span class="material-icons">logout</span>
+      Sair
+    </a>
+  </nav>
 
-    </nav>
+  <div class="container">
+    <h2>Configurações</h2>
 
-    <div class="container">
-        Configurações
-    </div>
+    <!-- Formulário para FUNCIONÁRIO -->
+    <form id="formFuncionario" class="hidden" onsubmit="atualizarPerfilFuncionario(event)">
+      <label>Nome:</label>
+      <input type="text" id="inputNomeFuncionario" />
 
+      <label>Senha:</label>
+      <input type="password" id="inputSenhaFuncionario" placeholder="Deixe vazio para não alterar" />
+
+      <button type="submit">Salvar alterações</button>
+    </form>
+
+    <button id="btnDeletarFuncionario" class="delete-btn hidden" onclick="deletarContaFuncionario()">
+      Encerrar Conta
+    </button>
+
+    <!-- Formulários para EMPRESA -->
+    <form id="formNomeFantasia" class="hidden" onsubmit="atualizarNomeFantasia(event)">
+      <label>Nome Fantasia:</label>
+      <input type="text" id="inputNomeFantasia" placeholder="Deixe vazio para não alterar" />
+      <button type="submit">Alterar Nome Fantasia</button>
+    </form>
+
+    <form id="formRazaoSocial" class="hidden" onsubmit="atualizarRazaoSocial(event)">
+      <label>Razão Social:</label>
+      <input type="text" id="inputRazaoSocial" placeholder="Deixe vazio para não alterar" />
+      <button type="submit">Alterar Razão Social</button>
+    </form>
+
+    <form id="formEmailEmpresa" class="hidden" onsubmit="atualizarEmailEmpresa(event)">
+      <label>Email:</label>
+      <input type="email" id="inputEmailEmpresa" placeholder="Deixe vazio para não alterar" />
+      <button type="submit">Alterar Email</button>
+    </form>
+
+    <form id="formSenhaEmpresa" class="hidden" onsubmit="atualizarSenhaEmpresa(event)">
+      <label>Senha:</label>
+      <input type="password" id="inputSenhaEmpresa" placeholder="Deixe vazio para não alterar" />
+      <button type="submit">Alterar Senha</button>
+    </form>
+
+  </div>
+
+  <script>
+    const tipoUsuario = sessionStorage.getItem("TIPO_USUARIO");
+    const idUsuario = Number(sessionStorage.getItem("ID_USUARIO"));
+    const idEmpresa = Number(sessionStorage.getItem("ID_EMPRESA"));
+
+    if (!tipoUsuario || !idUsuario) {
+      alert("Usuário não autenticado. Faça login.");
+      window.location.href = "/login.html";
+    }
+
+    // Mostrar formulário correto e carregar dados existentes
+    if (tipoUsuario === "funcionario") {
+      document.getElementById("formFuncionario").classList.remove("hidden");
+      document.getElementById("btnDeletarFuncionario").classList.remove("hidden");
+      carregarPerfilFuncionario();
+    } else if (tipoUsuario === "empresa") {
+      document.getElementById("formNomeFantasia").classList.remove("hidden");
+      document.getElementById("formRazaoSocial").classList.remove("hidden");
+      document.getElementById("formEmailEmpresa").classList.remove("hidden");
+      document.getElementById("formSenhaEmpresa").classList.remove("hidden");
+      carregarPerfilEmpresa();
+    } else {
+      alert("Tipo de usuário inválido.");
+      window.location.href = "/login.html";
+    }
+
+    // --- FUNÇÕES FUNCIONÁRIO ---
+
+    function carregarPerfilFuncionario() {
+      fetch(`/funcionario/${idUsuario}`)
+        .then((res) => {
+          if (res.status === 401) {
+            alert("Usuário não autenticado. Faça login.");
+            window.location.href = "/login.html";
+            return;
+          }
+          if (!res.ok) throw new Error("Erro ao carregar perfil.");
+          return res.json();
+        })
+        .then((data) => {
+          if (data && data.nome) {
+            document.getElementById("inputNomeFuncionario").value = data.nome;
+          }
+        })
+        .catch((err) => alert(err.message));
+    }
+
+    function atualizarPerfilFuncionario(event) {
+      event.preventDefault();
+      const nome = document.getElementById("inputNomeFuncionario").value.trim();
+      const senha = document.getElementById("inputSenhaFuncionario").value.trim();
+
+      const usuarioLogado = {
+        TIPO_USUARIO: tipoUsuario,
+        id: idUsuario,
+        fkEmpresa: idEmpresa,
+      };
+
+      const body = {};
+      if (nome !== "") body.nome = nome;
+      if (senha !== "") body.senha = senha;
+
+      fetch(`/funcionario/${idUsuario}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "usuario-logado": JSON.stringify(usuarioLogado),
+        },
+        body: JSON.stringify(body),
+      })
+        .then((res) => {
+          if (res.status === 401) {
+            alert("Usuário não autenticado. Faça login.");
+            window.location.href = "/login.html";
+            return;
+          }
+          if (!res.ok)
+            return res.json().then((data) => {
+              throw new Error(data.mensagem || "Erro ao atualizar.");
+            });
+          alert("Perfil atualizado com sucesso!");
+          document.getElementById("inputSenhaFuncionario").value = "";
+        })
+        .catch((err) => alert(err.message));
+    }
+
+    function deletarContaFuncionario() {
+      if (
+        !confirm(
+          "Tem certeza que deseja encerrar sua conta? Essa ação não poderá ser desfeita."
+        )
+      )
+        return;
+
+      const usuarioLogado = {
+        TIPO_USUARIO: tipoUsuario,
+        id: idUsuario,
+        fkEmpresa: idEmpresa,
+      };
+
+      fetch(`/funcionario/${idUsuario}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          "usuario-logado": JSON.stringify(usuarioLogado),
+        },
+      })
+        .then((res) => {
+          if (res.status === 401) {
+            alert("Usuário não autenticado. Faça login.");
+            window.location.href = "/login.html";
+            return;
+          }
+          if (!res.ok)
+            return res.json().then((data) => {
+              throw new Error(data.mensagem || "Erro ao deletar conta.");
+            });
+          alert("Conta encerrada com sucesso!");
+          sessionStorage.clear();
+          window.location.href = "/login.html";
+        })
+        .catch((err) => alert(err.message));
+    }
+
+    // --- FUNÇÕES EMPRESA ---
+
+    // Carrega dados atuais da empresa para os inputs
+    function carregarPerfilEmpresa() {
+      fetch(`/empresa/${idEmpresa}`)
+        .then((res) => {
+          if (res.status === 401) {
+            alert("Usuário não autenticado. Faça login.");
+            window.location.href = "/login.html";
+            return;
+          }
+          if (!res.ok) throw new Error("Erro ao carregar perfil da empresa.");
+          return res.json();
+        })
+        .then((data) => {
+          if (data) {
+            if (data.nomeFantasia) {
+              document.getElementById("inputNomeFantasia").value = data.nomeFantasia;
+            }
+            if (data.razaoSocial) {
+              document.getElementById("inputRazaoSocial").value = data.razaoSocial;
+            }
+            if (data.email) {
+              document.getElementById("inputEmailEmpresa").value = data.email;
+            }
+          }
+        })
+        .catch((err) => alert(err.message));
+    }
+
+    // Cada função faz a alteração específica, só enviando campo que quer atualizar
+
+    function atualizarNomeFantasia(event) {
+      event.preventDefault();
+      const nomeFantasia = document.getElementById("inputNomeFantasia").value.trim();
+      if (nomeFantasia === "") {
+        alert("Preencha o campo Nome Fantasia para alterar.");
+        return;
+      }
+      const usuarioLogado = {
+        TIPO_USUARIO: tipoUsuario,
+        id: idUsuario,
+        fkEmpresa: idEmpresa,
+      };
+      const body = { nomeFantasia };
+
+      fetch(`/empresa/nomeFantasia/${idEmpresa}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "usuario-logado": JSON.stringify(usuarioLogado),
+        },
+        body: JSON.stringify(body),
+      })
+        .then((res) => {
+          if (res.status === 401) {
+            alert("Usuário não autenticado. Faça login.");
+            window.location.href = "/login.html";
+            return;
+          }
+          if (!res.ok)
+            return res.json().then((data) => {
+              throw new Error(data.mensagem || "Erro ao alterar nome fantasia.");
+            });
+          alert("Nome Fantasia alterado com sucesso!");
+        })
+        .catch((err) => alert(err.message));
+    }
+
+    function atualizarRazaoSocial(event) {
+      event.preventDefault();
+      const razaoSocial = document.getElementById("inputRazaoSocial").value.trim();
+      if (razaoSocial === "") {
+        alert("Preencha o campo Razão Social para alterar.");
+        return;
+      }
+      const usuarioLogado = {
+        TIPO_USUARIO: tipoUsuario,
+        id: idUsuario,
+        fkEmpresa: idEmpresa,
+      };
+      const body = { razaoSocial };
+
+      fetch(`/empresa/razaoSocial/${idEmpresa}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "usuario-logado": JSON.stringify(usuarioLogado),
+        },
+        body: JSON.stringify(body),
+      })
+        .then((res) => {
+          if (res.status === 401) {
+            alert("Usuário não autenticado. Faça login.");
+            window.location.href = "/login.html";
+            return;
+          }
+          if (!res.ok)
+            return res.json().then((data) => {
+              throw new Error(data.mensagem || "Erro ao alterar razão social.");
+            });
+          alert("Razão Social alterada com sucesso!");
+        })
+        .catch((err) => alert(err.message));
+    }
+
+    function atualizarEmailEmpresa(event) {
+      event.preventDefault();
+      const email = document.getElementById("inputEmailEmpresa").value.trim();
+      if (email === "") {
+        alert("Preencha o campo Email para alterar.");
+        return;
+      }
+      const usuarioLogado = {
+        TIPO_USUARIO: tipoUsuario,
+        id: idUsuario,
+        fkEmpresa: idEmpresa,
+      };
+      const body = { email };
+
+      fetch(`/empresa/email/${idEmpresa}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "usuario-logado": JSON.stringify(usuarioLogado),
+        },
+        body: JSON.stringify(body),
+      })
+        .then((res) => {
+          if (res.status === 401) {
+            alert("Usuário não autenticado. Faça login.");
+            window.location.href = "/login.html";
+            return;
+          }
+          if (!res.ok)
+            return res.json().then((data) => {
+              throw new Error(data.mensagem || "Erro ao alterar email.");
+            });
+          alert("Email alterado com sucesso!");
+        })
+        .catch((err) => alert(err.message));
+    }
+
+    function atualizarSenhaEmpresa(event) {
+      event.preventDefault();
+      const senha = document.getElementById("inputSenhaEmpresa").value.trim();
+      if (senha === "") {
+        alert("Preencha o campo Senha para alterar.");
+        return;
+      }
+      const usuarioLogado = {
+        TIPO_USUARIO: tipoUsuario,
+        id: idUsuario,
+        fkEmpresa: idEmpresa,
+      };
+      const body = { senha };
+
+      fetch(`/empresa/senha/${idEmpresa}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "usuario-logado": JSON.stringify(usuarioLogado),
+        },
+        body: JSON.stringify(body),
+      })
+        .then((res) => {
+          if (res.status === 401) {
+            alert("Usuário não autenticado. Faça login.");
+            window.location.href = "/login.html";
+            return;
+          }
+          if (!res.ok)
+            return res.json().then((data) => {
+              throw new Error(data.mensagem || "Erro ao alterar senha.");
+            });
+          alert("Senha alterada com sucesso!");
+          document.getElementById("inputSenhaEmpresa").value = "";
+        })
+        .catch((err) => alert(err.message));
+    }
+  </script>
 </body>
 
 </html>

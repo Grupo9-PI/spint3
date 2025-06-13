@@ -16,15 +16,43 @@ function buscarEmpresaPorCnpjEmail(cnpj, email) {
 }
 
 function autenticarEmpresa(email, senha) {
-    const instrucao = `
+    const instrucaoSql = `
         SELECT idEmpresa, razaoSocial, nomeFantasia, email, senha, cnpj FROM empresa 
         WHERE email = '${email}' AND senha = '${senha}';
     `;
-    return database.executar(instrucao);
+    return database.executar(instrucaoSql);
+}
+function alterarNomeFantasia(idEmpresa, nomeFantasia) {
+    const instrucaoSql = `UPDATE empresa SET nomeFantasia = '${nomeFantasia}' WHERE idEmpresa = ${idEmpresa};`;
+    return database.executar(instrucaoSql);
 }
 
+function alterarRazaoSocial(idEmpresa, razaoSocial) {
+    const instrucaoSql = `UPDATE empresa SET razaoSocial = '${razaoSocial}' WHERE idEmpresa = ${idEmpresa};`;
+    return database.executar(instrucaoSql);
+}
+
+function alterarEmail(idEmpresa, email) {
+    const instrucaoSql = `UPDATE empresa SET email = '${email}' WHERE idEmpresa = ${idEmpresa};`;
+    return database.executar(instrucaoSql);
+}
+
+function alterarSenha(idEmpresa, senha) {
+    const instrucaoSql = `UPDATE empresa SET senha = '${senha}' WHERE idEmpresa = ${idEmpresa};`;
+    return database.executar(instrucaoSql);
+}
+
+function buscarEmpresaPorId(idEmpresa) {
+    const instrucaoSql = `SELECT idEmpresa, razaoSocial, nomeFantasia, cnpj, email FROM empresa WHERE idEmpresa = ${idEmpresa};`;
+    return database.executar(instrucaoSql);
+}
 module.exports = {
     cadastrarEmpresa,
     buscarEmpresaPorCnpjEmail,
-    autenticarEmpresa
+    autenticarEmpresa,
+    alterarNomeFantasia,
+    alterarRazaoSocial,
+    alterarEmail,
+    alterarSenha,
+    buscarEmpresaPorId
 };

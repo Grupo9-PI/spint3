@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Tanques do Galpão</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+
+    h1 {
+      margin-bottom: 20px;
+    }
+
+    #tanques-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+
+    .card-tanque {
+      border: 1px solid #aaa;
+      border-radius: 8px;
+      padding: 15px;
+      width: 180px;
+      cursor: pointer;
+      box-shadow: 2px 2px 8px #ddd;
+      transition: box-shadow 0.3s ease;
+    }
+
+    .card-tanque:hover {
+      box-shadow: 3px 3px 12px #999;
+    }
+
+    form {
+      max-width: 350px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    label {
+      font-weight: bold;
+    }
+
+    input[type="text"],
+    input[type="number"] {
+      padding: 8px;
+      border-radius: 4px;
+      border: 1px solid #ccc;
+    }
+
+    button {
+      padding: 10px;
+      background-color: #2a9d8f;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background-color: #21867a;
+    }
+  </style>
+</head>
+
+<body>
+  <h1 id="nome-galpao">Tanques do Galpão</h1>
+
+  <section id="tanques-container">
+    <!-- Cards dos tanques aparecerão aqui -->
+  </section>
+
+  <section>
+    <h2>Cadastrar Novo Tanque</h2>
+    <form id="formCadastrarTanque">
+      <label for="nomeTanque">Nome do Tanque:</label>
+      <input type="text" id="nomeTanque" name="nomeTanque" required />
+
+      <label for="qtOstras">Quantidade de Ostras:</label>
+      <input type="number" id="qtOstras" name="qtOstras" required min="0" />
+
+      <button type="submit">Cadastrar Tanque</button>
+    </form>
+  </section>
+
+  <script>
+    // Pega o idGalpao armazenado na sessionStorage ou via query string
+    const idGalpao = sessionStorage.ID_GALPAO || new URLSearchParams(window.location.search).get('idGalpao');
+    if (!idGalpao) {
+      alert("Galpão não identificado.");
+      window.location.href = "./galpao.html";
+    }
+
+    const nomeGalpaoEl = document.getElementById("nome-galpao");
+    const tanquesContainer = document.getElementById("tanques-container");
+    const form = document.getElementById("formCadastrarTanque");
+
+    // Função para buscar dados do galpao e preencher título
+    function carregarNomeGalpao() {
+      fetch(`tanque/galpao/${idGalpao}`)
+        .then(res => {
+          if (!res.ok) throw new Error("Erro ao buscar galpão");
+          return res.json();
+        })
+        .then(data => {
+          nomeGalpaoEl.textContent = `Tanques do Galpão: ${data.nome}`;
+          sessionStorage.ID_GALPAO = idGalpao; // garante salvar
+        })
+        .catch(err => alert(err.message));
+    }
+
+    // Função para listar tanques
+    function listarTanques() {
+      fetch(`/tanque/listar/${idGalpao}`)
+        .then(res => {
+          if (!res.ok) throw new Error("Erro ao buscar tanques");
+          return res.json();
+        })
+        .then(tanques => {
+          tanquesContainer.innerHTML = "";
+          if (tanques.length === 0) {
+            tanquesContainer.innerHTML = "<p>Nenhum tanque cadastrado.</p>";
+            return;
+          }
+          for (var i = 0; i < tanques.length; i++) {
+            var tanque = tanques[i];
+            var card = document.createElement("div");
+            card.className = "card-tanque";
+            card.textContent = tanque.nome + " (" + tanque.qtOstras + " ostras)";
+            card.onclick = function (tanqueId) {
+              return function () {
+                sessionStorage.ID_TANQUE = tanqueId;
+                window.location.href = `sensor.html?idTanque=${tanqueId}`;
+              };
+            }(tanque.idTanque);
+            tanquesContainer.appendChild(card);
+          }
+
+        })
+        .catch(err => alert(err.message));
+    }
+
+    // Cadastrar tanque
+    form.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const nomeTanque = form.nomeTanque.value.trim();
+      const qtOstras = parseInt(form.qtOstras.value);
+
+      fetch("/tanque/cadastrar", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ nome: nomeTanque, qtOstras, fkGalpao: idGalpao }),
+      })
+        .then(res => {
+          if (!res.ok) throw new Error("Erro ao cadastrar tanque");
+          return res.json();
+        })
+        .then(() => {
+          form.reset();
+          listarTanques();
+        })
+        .catch(err => alert(err.message));
+    });
+
+    carregarNomeGalpao();
+    listarTanques();
+  </script>
+</body>
+
+</html>

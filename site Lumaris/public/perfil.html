@@ -1,0 +1,53 @@
+<h2>Editar Meu Perfil</h2>
+<form id="formPerfilFuncionario" onsubmit="return false;">
+  <label for="nome">Nome:</label>
+  <input type="text" id="nome" name="nome" required />
+
+  <label for="senha">Nova Senha:</label>
+  <input type="password" id="senha" name="senha" />
+
+  <button onclick="editarPerfilFuncionario()">Salvar</button>
+</form>
+
+<script>
+  const idUsuario = sessionStorage.ID_USUARIO;
+
+  function carregarPerfil() {
+    fetch(`/usuario/${idUsuario}`)
+      .then(res => res.json())
+      .then(data => {
+        document.getElementById("nome").value = data.nome;
+      })
+      .catch(err => alert("Erro ao carregar perfil"));
+  }
+
+  function editarPerfilFuncionario() {
+    const nome = document.getElementById("nome").value.trim();
+    const senha = document.getElementById("senha").value.trim();
+
+    if (!nome) {
+      alert("Nome é obrigatório");
+      return;
+    }
+
+    const dados = { nome };
+    if (senha) dados.senha = senha;
+
+    fetch(`/usuario/${idUsuario}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(dados),
+    })
+    .then(res => {
+      if (res.ok) {
+        alert("Perfil atualizado");
+        document.getElementById("senha").value = "";
+      } else {
+        res.json().then(data => alert(data.mensagem || "Erro ao atualizar"));
+      }
+    })
+    .catch(() => alert("Erro de rede"));
+  }
+
+  carregarPerfil();
+</script>

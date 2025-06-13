@@ -16,239 +16,288 @@
   <link href="https://fonts.cdnfonts.com/css/ds-digital" rel="stylesheet" />
 </head>
 
-<body>
-  <nav class="sidebar">
-    <a href="./dashboard.html" style="background-color: rgb(154, 187, 187);">
-            <span class="material-icons">dashboard</span>
-            Dashboard
-        </a>
-    <a href="./funcionarios.html">
-      <span class="material-icons">people</span>
-      Funcionários
-    </a>
-    <a href="./configuracoes.html">
-      <span class="material-icons">settings</span>
-      Configurações
-    </a>
-    <a href="./sensores.html">
-      <span class="material-icons">sensors</span>
-      Sensores
-    </a>
-    <a href="./login.html">
-      <span class="material-icons">logout</span>
-      Sair
-    </a>
-     
-  </nav>
+<nav class="sidebar">
+  <a href="./dashboard.html" style="background-color: rgb(154, 187, 187);">
+    <span class="material-icons">dashboard</span>
+    Dashboard
+  </a>
+  <a href="./funcionarios.html">
+    <span class="material-icons">people</span>
+    Funcionários
+  </a>
+  <a href="./configuracoes.html">
+    <span class="material-icons">settings</span>
+    Configurações
+  </a>
+  <a href="./galpao.html">
+    <img src="./assets/imgs/icon_tanque.png" style="height: 25px">
+    Galpões
+  </a>
+  <a href="./login.html">
+    <span class="material-icons">logout</span>
+    Sair
+  </a>
 
-  <div class="container">
-    <div class="dash">
-      <div class="nav">
-        <div class="titulo">
-          Bem-vindo, <span id="nomeUsuario" style="color: teal;">Maré Branca</span>
-        </div>
+</nav>
 
-      </div>
-      <div class="socorro">
-        <div class="alertas">
-          <div class="alerta risco" onclick="openModal('sensores')">
-            <div class="titulo">Sensores em risco</div>
-            <div class="valor">3 de 13 <span class="material-icons">do_not_disturb_on</span></div>
-          </div>
-          <div class="alerta instabilidade" onclick="openModal('instabilidade')">
-            <div class="titulo">Instabilidade luminosa</div>
-            <div class="valor">Ver sensores <span class="material-icons" style="margin-left: 5px;">light_mode</span></div>
-          </div>
-          <div class="alerta luminosidade" onclick="openModal('ideal')">
-            <div class="titulo">Luminosidade da fazenda</div>
-            <div class="valor">IDEAL <span class="material-icons">highlight</span></div>
-          </div>
-        </div>
-
-        <div class="graficos">
-          <div class="linhas">
-            <canvas id="myChart"></canvas>
-            <span class="material-icons" onclick="openModal('modal-linhas')" style="font-size: large;">info</span>
-          </div>
-
-          <div class="barras">
-            <canvas id="myChart2"></canvas>
-            <span class="material-icons" onclick="openModal('modal-barras')" style="font-size: large;">info</span>
-          </div>
-
-          <div class="donut" id="donut" style="height: 200px; width: 300px;">
-            <p>Taxa de sobrevivência das ostras</p>
-            <canvas id="myDonutChart"></canvas>
-            <span class="material-icons" style="font-size: large;" onclick="openModal('modal-donut')">info</span>
-          </div>
-
-          <div class="economia" style="height: 150px; width: 300px;">
-            Economia estimada <span style="font-weight: bold;">por mês</span><br />
-            <h2 style="font-size: 33.7px;">R$ <span>142.610,56</span></h2>
-            <span class="material-icons" style="font-size: large;" onclick="openModal('modal-economia')">info</span>
-          </div>
-
-          <div class="lucro" style="height: 150px; width: 300px;">
-            Lucro do mês passado (BRL) <br />
-            <h2><span style="color: rgb(97, 193, 97); font-size: 40px;">R$123.212,90</span></h2>
-            <span class="material-icons" style="font-size: large;" onclick="openModal('modal-lucro')">info</span>
-          </div>
-
-          <div class="temporizador" style="height: 150px; width: 300px;">
-            Tempo restante das ostras em
-            <span id="estado" style="color: orange; font-weight: bold;"> Alta Luminsidade</span><br />
-            <h1>
-              <span id="temporizador" style="font-family: 'DS-digital', sans-serif; font-size: 60px;">12:00:00</span>
-            </h1>
-            <span class="material-icons" style="font-size: large;" onclick="openModal('modal-temporizador')">info</span>
-          </div>
-        </div>
-      </div>
+<main class="main-content">
+  <h2>Boas vindas, <span id="nome_user">usuário!</span></h2>
+  <div class="kpis">
+    <div class="kpi">
+      <h3>Sensores Ativos</h3>
+      <p><span id="span_qtdSensores">0</span></p>
     </div>
-
-    <div id="myModal" class="modal">
-      <div class="modal-content">
-        <span class="close" onclick="closeModal()">&times;</span>
-        <h2 id="modal-title">Informações</h2>
-        <p id="modal-text">Texto informativo sobre o item.</p>
-      </div>
+    <div class="kpi">
+      <h3>Luminosidade Média (lux)</h3>
+      <p><span id="span_mediaSensores">0</span></p>
+    </div>
+    <div class="kpi">
+      <h3>Total de Ostras</h3>
+      <p><span id="span_ostras">0</span></p>
     </div>
   </div>
 
-  <script>
-    const nome = sessionStorage.NOME_USUARIO || "Maré Branca";
-    const nomeUsuarioSpan = document.getElementById("nomeUsuario");
-    nomeUsuarioSpan.textContent = nome;
-  </script>
+  <div class="charts">
+    <div class="chart-card">
+      <h4>Luminosidade em tempo real</h4>
+      <canvas id="graficoLuminosidade"></canvas>
+    </div>
+    <div class="chart-card">
+      <h4>Tempo na luminosidade adequada (%) </h4>
+      <canvas id="donutchart" style="height: 150px;"></canvas>
+    </div>
+  </div>
+</main>
+<script>
+  
+  const id = sessionStorage.ID_EMPRESA;
+  function obterSensores() {
+      let span = document.getElementById('span_qtdSensores');
 
-  <script>
-    const ctx = document.getElementById('myChart');
-    new Chart(ctx, {
-      type: 'line',
-      data: {
-        labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
-        datasets: [{
-          label: 'Lucro (BRL)',
-          data: [720, 890, 900, 1200, 1296, 1567, 1777, 2500, 2763, 3012, 3212, 3754],
-          borderWidth: 1,
-          backgroundColor: 'darkgreen',
-          maintainAspectRatio: false,
-        }]
-      },
-      options: {
-        scales: {
-          y: {
-            beginAtZero: true
-          }
-        }
-      }
-    });
+      fetch(`/dashboard/qtdSensores/${id}`)
+        .then(res => res.json())
+        .then(data => {
+          span.textContent = data.total;
+        })
+        .catch(err => {
+          console.error("Erro ao buscar contagem de publicações:", err);
+        });
+    }
+    function obterMedia() {
+      let span = document.getElementById('span_mediaSensores');
 
-    const ctx2 = document.getElementById('myChart2');
+      fetch(`/dashboard/mediaIluminacao/${id}`)
+        .then(res => res.json())
+        .then(data => {
+          span.textContent = data.media;
+        })
+        .catch(err => {
+          console.error("Erro ao buscar contagem de publicações:", err);
+        });
+    }
+    function obterOstras() {
+      let span = document.getElementById('span_ostras');
 
-    const horas = [
-      '00h', '01h', '02h', '03h', '04h', '05h',
-      '06h', '07h', '08h', '09h', '10h', '11h',
-      '12h', '13h', '14h', '15h', '16h', '17h',
-      '18h', '19h', '20h', '21h', '22h', '23h'
-    ];
-
-    const luminosidade = [
-      210, 250, 240, 389, 370, 450, 800, 860, 821, 807,
-      760, 750, 824, 920, 850, 750, 720, 750, 470, 455,
-      490, 350, 290, 210
-    ];
-
-    new Chart(ctx2, {
-      type: 'bar',
-      data: {
-        labels: horas,
-        datasets: [{
-          label: 'Luminosidade ao longo do dia (LUX)',
-          data: luminosidade,
-          borderWidth: 1,
-          backgroundColor: '#0ABAB5',
-          borderColor: 'aliceblue',
-        }]
-      },
-      options: {
-        plugins: {
-          annotation: {
-            annotations: {
-              minClaro: {
-                type: 'line',
-                yMin: 600,
-                yMax: 600,
-                borderColor: 'green',
-                borderWidth: 2,
-
-              },
-              maxClaro: {
-                type: 'line',
-                yMin: 900,
-                yMax: 900,
-                borderColor: 'green',
-                borderWidth: 2,
-
-              },
-
-            }
-          }
-        },
-        scales: {
-          y: {
-            beginAtZero: true,
-            max: 1000,
-          },
-          x: {
-            grid: {
-              display: false,
-            }
-          }
-        }
-      }
-    });
-
-
-    const ctx4 = document.getElementById('myDonutChart');
-
-    new Chart(ctx4, {
-      type: 'doughnut',
-      data: {
-        labels: ['Progresso', 'Faltando'],
-        datasets: [{
-          data: [75, 25],
-          backgroundColor: ['darkslategray', '#E0E0E0'],
-          borderWidth: 0,
-          cutout: '80%',
-        }]
-      },
-      options: {
-        responsive: true,
-        rotation: -90,
-        circumference: 180,
-        plugins: {
-          legend: { display: false },
-          tooltip: { enabled: false }
-        }
-      },
-      plugins: [{
-        beforeDraw(chart) {
-          const { width, height, ctx } = chart;
-          ctx.save();
-          const fontSize = height / 4;
-          ctx.font = `${fontSize}px sans-serif`;
-          ctx.fillStyle = '#333';
-          ctx.textAlign = 'center';
-          ctx.textBaseline = 'middle';
-          ctx.fillText('75%', width / 2, height / 1.4);
-          ctx.restore();
-        }
-      }]
-    });
+      fetch(`/dashboard/qtdOstras/${id}`)
+        .then(res => res.json())
+        .then(data => {
+          span.textContent = data.totalOstras;
+        })
+        .catch(err => {
+          console.error("Erro ao buscar contagem de publicações:", err);
+        });
+    }
+    obterOstras();
+    obterMedia();
+    obterSensores();
+</script>
+<script>
+  setInterval(() => {
+    fetch(`/dashboard/simular/${idEmpresa}`, { method: "POST" })
+      .then(res => res.json())
+      .then(console.log)
+      .catch(err => console.error("Erro ao simular capturas:", err));
+  }, 3000);
 </script>
 
+<script>
+      const nomeEmpresa = sessionStorage.NOME_USUARIO;
 
+      nomeUsuario = document.getElementById('nome_user');
+      nomeUsuario.textContent = nomeEmpresa;
+
+  const dadosGrafico = {
+    labels: [],
+    datasets: [{
+      label: 'Luminosidade',
+      data: [],
+      borderColor: 'orange',
+      tension: 0.3
+    }]
+  };
+
+  const config = {
+    type: 'line',
+    data: dadosGrafico,
+    options: {
+      mantainAspectRatio: false,
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: true,
+          max: 1000
+        }
+      },
+      plugins: {
+        annotation: {
+          annotations: {
+            line1: {
+              type: 'line',
+              yMin: 500,
+              yMax: 500,
+              borderColor: 'red',
+              borderWidth: 2,
+              borderDash: [5, 5],
+              label: {
+                content: '500',
+                position: 'right',
+                enabled: true,
+                font: {
+                  size: 12
+                }
+              }
+            },
+            line2: {
+              type: 'line',
+              yMin: 850,  // Linha em 1000
+              yMax: 850,
+              borderColor: 'blue',
+              borderWidth: 2,
+              borderDash: [5, 5], // Linha tracejada
+              label: {
+                content: '850',
+                position: 'right',
+                enabled: true,
+                font: {
+                  size: 12
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  };
+
+  const grafico = new Chart(
+    document.getElementById('graficoLuminosidade'),
+    config
+  );
+
+  const idEmpresa = sessionStorage.ID_EMPRESA;
+
+  setInterval(() => {
+    fetch(`/dashboard/ultimaCaptura/${idEmpresa}`)
+      .then(res => res.json())
+      .then(dado => {
+        const horario = new Date(dado.dtRegistro).toLocaleTimeString();
+
+        if (!dadosGrafico.labels.includes(horario)) {
+          dadosGrafico.labels.push(horario);
+          dadosGrafico.datasets[0].data.push(dado.iluminacao);
+
+          if (dadosGrafico.labels.length > 10) {
+            dadosGrafico.labels.shift();
+            dadosGrafico.datasets[0].data.shift();
+          }
+
+          grafico.update();
+        }
+      })
+      .catch(err => console.error("Erro ao buscar última captura:", err));
+  }, 1000);
+
+
+
+   const ctx2 = document.getElementById('donutchart');
+const graficoDonut = new Chart(ctx2, {
+  type: 'doughnut',
+  data: {
+    labels: ['Dentro da faixa (500-850)', 'Fora da faixa'],
+    datasets: [{
+      label: 'Porcentagem de Luminosidade',
+      data: [0, 0],
+      backgroundColor: ['#16a085', '#e74c3c'],
+      borderWidth: 0,
+      hoverOffset: 10 
+    }]
+  },
+  options: {
+    maintainAspectRatio: false,
+    responsive: true,
+    cutout: '70%', // torna mais "donut"
+    plugins: {
+      legend: {
+        position: 'bottom',
+        labels: {
+          color: '#333',
+          font: {
+            size: 14,
+            family: "'Segoe UI', sans-serif"
+          },
+          padding: 20
+        }
+      },
+      tooltip: {
+        callbacks: {
+          label: function(tooltipItem) {
+            const total = tooltipItem.dataset.data.reduce((a, b) => a + b, 0);
+            const currentValue = tooltipItem.raw;
+            const percentage = ((currentValue / total) * 100).toFixed(2);
+            return `${tooltipItem.label}: ${percentage}%`;
+          }
+        }
+      }
+    }
+  }
+});
+
+
+
+  const capturasDentroFaixa = [];
+const capturasForaFaixa = [];
+
+setInterval(() => {
+  fetch(`/dashboard/ultimaCaptura/${idEmpresa}`)
+    .then(res => res.json())
+    .then(dado => {
+      const iluminacao = dado.iluminacao;
+
+      if (iluminacao >= 500 && iluminacao <= 850) {
+        capturasDentroFaixa.push(1);
+      } else {
+        capturasForaFaixa.push(1);
+      }
+
+      // Mantém o histórico limitado (ex: últimas 100 capturas)
+      if (capturasDentroFaixa.length + capturasForaFaixa.length > 100) {
+        if (capturasDentroFaixa.length > 0) capturasDentroFaixa.shift();
+        if (capturasForaFaixa.length > 0) capturasForaFaixa.shift();
+      }
+
+      const total = capturasDentroFaixa.length + capturasForaFaixa.length;
+      const dentroPercent = (capturasDentroFaixa.length / total) * 100;
+      const foraPercent = (capturasForaFaixa.length / total) * 100;
+
+      graficoDonut.data.datasets[0].data = [dentroPercent, foraPercent];
+      graficoDonut.update();
+    })
+    .catch(err => console.error("Erro ao buscar última captura:", err));
+}, 1000);
+
+
+</script>
 </body>
+
 
 </html>

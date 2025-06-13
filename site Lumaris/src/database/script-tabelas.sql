@@ -1,3 +1,4 @@
+
 CREATE DATABASE lumaris;
 USE lumaris;
 
@@ -138,3 +139,42 @@ INSERT INTO captura (dtRegistro,iluminacao, fkSensor) VALUES
 	(DEFAULT, 650, 5),
 	(DEFAULT, 700, 6),
 	(DEFAULT, 800, 7);
+
+-- Exibir Nome Empresa, Supervisor, Funcionário Responsável, Identificação do Cultivo, Quantidade de ostras, Identificação do Sensor, Data do Registro e valor LX.
+
+SELECT u.idUsuario, u.nome AS 'Funcionário Responsável',
+	e.nomeFantasia AS 'Nome da Empresa',
+	sup.nome AS 'Supervisor',
+	g.nome AS 'Nome do Galpão',
+	t.qtOstras AS 'Quantidade de Ostras',
+	s.idSensor AS 'Identificação do Sensor',
+	c.dtRegistro AS 'Data de Registro',
+	c.iluminacao AS 'Valor LX' FROM captura c
+		JOIN sensorLDR s ON c.fkSensor = s.idSensor
+		JOIN tanque t ON s.fkTanque = t.idTanque
+        JOIN galpao g ON t.fkGalpao = g.idGalpao
+		JOIN empresa e ON g.fkEmpresa = e.idEmpresa
+		JOIN usuario u ON e.idEmpresa = u.fkEmpresa
+		LEFT JOIN usuario sup ON sup.idUsuario = u.fkSupervisor;
+        
+-- SELECTS
+-- funcionarios e supervisores de uma empresa
+SELECT u.nome AS 'Funcionario', u.email, s.nome AS 'Supervisor', s.email FROM usuario u
+	JOIN usuario s ON  s.idUsuario = u.fkSupervisor
+	JOIN empresa e ON u.fkEmpresa = e.idEmpresa
+		WHERE e.idEmpresa = 3;
+	
+		
+        
+-- quantidade de sensores da empresa x no galpão y
+SELECT COUNT(idTanque) AS 'Quantidade de galpões' FROM tanque t
+	JOIN galpao g ON t.fkGalpao = g.idGalpao
+    JOIN empresa e ON g.fkEmpresa = e.idEmpresa
+    WHERE g.idGalpao = 1 AND e.idEmpresa = 1;
+    
+
+/*
+	luminosidade ao longo do dia
+    anormalidades de luminosidade
+*/
+

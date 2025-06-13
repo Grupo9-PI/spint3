@@ -69,7 +69,7 @@
         <div class="formulario">
 
           <div class="campo">
-            <label for="estado_input">Estado</label>
+            <label for="estado_input">UF</label>
             <select id="estado_input">
               <option value="">Selecione um estado</option>
               <option value="AC">Acre</option>
@@ -105,7 +105,7 @@
 
           <div class="campo">
             <label for="cidade_input">Cidade</label>
-            <input id="cidade_input" type="text" placeholder="Sorocaba" />
+            <input id="cidade_input" type="text" placeholder="Sua cidade" />
           </div>
 
           <div class="campo">
@@ -114,13 +114,13 @@
           </div>
 
           <div class="campo">
-            <label for="rua_input">Rua</label>
+            <label for="rua_input">Logradouro</label>
             <input id="rua_input" type="text" placeholder="Sua rua" />
           </div>
 
           <div class="campo">
             <label for="num_input">Número</label>
-            <input id="num_input" type="text" placeholder="123" />
+            <input id="num_input" type="text" placeholder="Seu número" />
           </div>
 
           <button class="botao" type="submit" onclick="cadastrar()">Cadastrar</button>
@@ -150,8 +150,11 @@
 
   <script>
     function limparFormulario() {
-      document.querySelectorAll('input').forEach(input => input.value = '');
-    }
+  var inputs = document.querySelectorAll('input');
+  for (var i = 0; i < inputs.length; i++) {
+    inputs[i].value = '';
+  }
+}
 
     function mostrarToast(mensagem, cor = "linear-gradient(to right, #00b09b, #96c93d)") {
       Toastify({

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Cadastro de Galpões</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    h1 {
+      margin-bottom: 20px;
+    }
+    .form-container {
+      margin-bottom: 30px;
+    }
+    .card {
+      border: 1px solid #ccc;
+      border-radius: 12px;
+      padding: 15px;
+      margin: 10px 0;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .card:hover {
+      background-color: #f0f0f0;
+    }
+  </style>
+</head>
+<body>
+  <h1>Cadastro de Galpões</h1>
+
+  <div class="form-container">
+    <input type="text" id="inputNomeGalpao" placeholder="Nome do galpão" />
+    <button onclick="cadastrarGalpao()">Cadastrar</button>
+  </div>
+
+  <div id="galpoesContainer">
+    <h2>Seus Galpões:</h2>
+    <div id="listaGalpoes"></div>
+  </div>
+
+  <script>
+    const idEmpresa = sessionStorage.ID_EMPRESA;
+
+    if (!idEmpresa) {
+      alert("Você precisa estar logado como empresa.");
+      window.location.href = "/login.html";
+    }
+
+    function cadastrarGalpao() {
+      const nome = document.getElementById("inputNomeGalpao").value;
+      if (!nome) return alert("Informe o nome do galpão");
+
+      fetch("/galpao/cadastrar", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ nome, fkEmpresa: idEmpresa })
+      })
+      .then(res => {
+        if (res.ok) {
+          alert("Galpão cadastrado com sucesso!");
+          document.getElementById("inputNomeGalpao").value = "";
+          carregarGalpoes();
+        } else {
+          res.text().then(alert);
+        }
+      });
+    }
+
+    function carregarGalpoes() {
+      fetch(`/galpao/listar/${idEmpresa}`)
+        .then(res => res.json())
+        .then(galpoes => {
+          const container = document.getElementById("listaGalpoes");
+          container.innerHTML = "";
+          for (var i = 0; i < galpoes.length; i++) {
+            var galpao = galpoes[i];
+            var card = document.createElement("div");
+            card.className = "card";
+            card.textContent = galpao.nome;
+            card.onclick = function (id) {
+              return function () {
+                sessionStorage.ID_GALPAO = id;
+                window.location.href = "tanques.html";
+              };
+            }(galpao.idGalpao);
+            container.appendChild(card);
+          }
+
+        })
+        .catch(err => console.error("Erro ao carregar galpões:", err));
+    }
+
+    carregarGalpoes();
+  </script>
+</body>
+</html>

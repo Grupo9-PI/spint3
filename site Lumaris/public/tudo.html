@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="./css/geral.css">
+</head>
+
+<body>
+    <nav class="sidebar">
+        <a href="./dashboard.html">
+            <span class="material-icons">dashboard</span>
+            Dashboard
+        </a>
+        <a href="./funcionarios.html">
+            <span class="material-icons">people</span>
+            Funcionários
+        </a>
+        <a href="./configuracoes.html">
+            <span class="material-icons">settings</span>
+            Configurações
+        </a>
+        <a href="./galpao.html" style="background-color: rgb(110, 174, 174);">
+                  <img src="./assets/imgs/icon_tanque.png" style="height: 25px">
+            Galpões
+        </a>
+        <a href="./login.html">
+            <span class="material-icons">logout</span>
+            Sair
+        </a>
+
+    </nav>
+
+    <div class="container">
+        <h1>Capturas de Luminosidade</h1>
+
+  <label>Galpão:
+    <select id="selectGalpao" onchange="carregarTanques()"></select>
+  </label>
+
+  <label>Tanque:
+    <select id="selectTanque" onchange="carregarSensores()"></select>
+  </label>
+
+  <label>Sensor:
+    <select id="selectSensor" onchange="carregarCapturas()"></select>
+  </label>
+
+  <hr>
+
+  <h3>Registrar Captura Manual</h3>
+  <input type="number" id="inputLuminosidade" placeholder="Luminosidade">
+  <button onclick="registrarCaptura()">Registrar</button>
+
+  <hr>
+
+  <h3>Histórico de Capturas</h3>
+  <canvas id="graficoCapturas" width="400" height="200"></canvas>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+    const idEmpresa = Number(sessionStorage.getItem("ID_EMPRESA"));
+let grafico;
+
+function carregarGalpoes() {
+  fetch(`/galpao/listar/${idEmpresa}`)
+    .then(res => res.json())
+    .then(data => {
+      const select = document.getElementById("selectGalpao");
+      select.innerHTML = "";
+      for (var i = 0; i < data.length; i++) {
+        var galpao = data[i];
+        select.innerHTML += `<option value="${galpao.idGalpao}">${galpao.nome}</option>`;
+      }
+      carregarTanques();
+    });
+}
+
+function carregarTanques() {
+  const idGalpao = document.getElementById("selectGalpao").value;
+  fetch(`/tanque/listar/${idGalpao}`)
+    .then(res => res.json())
+    .then(data => {
+      const select = document.getElementById("selectTanque");
+      select.innerHTML = "";
+      for (var i = 0; i < data.length; i++) {
+        var tanque = data[i];
+        select.innerHTML += `<option value="${tanque.idTanque}">${tanque.nome}</option>`;
+      }
+      carregarSensores();
+    });
+}
+
+
+function carregarSensores() {
+  const idTanque = document.getElementById("selectTanque").value;
+  fetch(`/sensor/listar/${idTanque}`)
+    .then(res => res.json())
+    .then(data => {
+      const select = document.getElementById("selectSensor");
+      select.innerHTML = "";
+      for (var i = 0; i < data.length; i++) {
+        var sensor = data[i];
+        select.innerHTML += `<option value="${sensor.idSensor}">${sensor.numSerie}</option>`;
+      }
+
+      carregarCapturas();
+    });
+}
+
+function carregarCapturas() {
+  const idSensor = document.getElementById("selectSensor").value;
+  fetch(`/captura/listar/${idSensor}`)
+    .then(res => res.json())
+    .then(data => {
+      const labels = data.map(c => new Date(c.dtRegistro).toLocaleString());
+      const valores = data.map(c => c.iluminacao);
+      plotarGrafico(labels, valores);
+    });
+}
+
+function plotarGrafico(labels, dados) {
+  const ctx = document.getElementById("graficoCapturas").getContext("2d");
+
+  if (grafico) grafico.destroy();
+
+  grafico = new Chart(ctx, {
+    type: "line",
+    data: {
+      labels,
+      datasets: [{
+        label: "Luminosidade",
+        data: dados,
+        borderColor: "blue",
+        fill: false
+      }]
+    },
+    options: {
+      scales: {
+        y: { beginAtZero: true }
+      }
+    }
+  });
+}
+
+function registrarCaptura() {
+  const fkSensor = document.getElementById("selectSensor").value;
+  const iluminacao = document.getElementById("inputLuminosidade").value;
+
+  fetch("/captura/registrar", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ iluminacao, fkSensor })
+  })
+    .then(res => {
+      if (res.ok) {
+        alert("Captura registrada!");
+        document.getElementById("inputLuminosidade").value = "";
+        carregarCapturas();
+      } else {
+        return res.json().then(err => { throw new Error(err.mensagem); });
+      }
+    })
+    .catch(err => alert("Erro: " + err.message));
+}
+
+window.onload = carregarGalpoes;
+
+  </script>
+</body>
+</html>

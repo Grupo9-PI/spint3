@@ -1,155 +1,315 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-BR">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-
-    <link rel="stylesheet" href="./css/geral.css">
-    <link rel="stylesheet" href="./css/funcionarios.css">
-    <link rel="stylesheet" href="./css/modal.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gerenciamento de Funcionários</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link rel="stylesheet" href="./css/geral.css" />
+  <link rel="stylesheet" href="./css/funcionarios.css" />
+  <link rel="stylesheet" href="./css/modal.css" />
 </head>
 
 <body>
-    <nav class="sidebar">
-        <a href="./dashboard.html">
-            <span class="material-icons">dashboard</span>
-            Dashboard
-        </a>
-        <a href="./funcionarios.html" style="background-color: rgb(148, 169, 169);">
-            <span class="material-icons">people</span>
-            Funcionários
-        </a>
-        <a href="./configuracoes.html">
-            <span class="material-icons">settings</span>
-            Configurações
-        </a>
-        <a href="./sensores.html">
-            <span class="material-icons">sensors</span>
-            Sensores
-        </a>
-        <a href="./login.html">
-            <span class="material-icons">logout</span>
-            Sair
-        </a>
+  <nav class="sidebar">
+    <a href="./dashboard.html"><span class="material-icons">dashboard</span>Dashboard</a>
+    <a href="./funcionarios.html" style="background-color: rgb(148, 169, 169);"><span
+        class="material-icons">people</span>Funcionários</a>
+    <a href="./configuracoes.html"><span class="material-icons">settings</span>Configurações</a>
+    <a href="./galpao.html"><img src="./assets/imgs/icon_tanque.png" style="height: 25px">Galpões</a>
+    <a href="./login.html"><span class="material-icons">logout</span>Sair</a>
+  </nav>
 
-    </nav>
-    <div class="container">
+  <div class="container">
+    <h2>Gerenciamento de Funcionários</h2>
 
-        <h2>Gerenciamento de Funcionarios</h2>
-
-        <div style="display: flex;">
-            <button id="abrirModal">Adicionar Funcionário</button><span class="material-icons">groupadd</span>
-        </div>
-        <div class="search-container">
-            <input type="text" name="search" placeholder="Search..">
-            <span class="material-icons">search</span>
-        </div>
-
-        <div class="area-user">
-            <table id="funcionarios">
-                <tr>
-                    <th>Nome</th>
-                    <th>Email</th>
-                    <th>tipo</th>
-                    <th>Supervisor</th>
-                    <th>Ações</th>
-                </tr>
-                <tr>
-                    <td>Alfreds Futterkiste</td>
-                    <td>maria.anders09@gmail.com</td>
-                    <td>Germany</td>
-                    <td>Francisco Chang</td>
-                    <td><span class="material-icons clicavel">edit</span></td>
-                </tr>
-                <tr>
-                    <td>Berglunds snabbköp</td>
-                    <td>christinaberglund@hotmail.com</td>
-                    <td>Sweden</td>
-                    <td>Francisco Chang</td>
-                    <td><span class="material-icons clicavel">edit</span></td>
-                </tr>
-                <tr>
-                    <td>Centro comercial Moctezuma</td>
-                    <td>Francisc0chang@live.com</td>
-                    <td>Mexico</td>
-                    <td>Francisco Chang</td>
-                    <td><span class="material-icons clicavel">edit</span></td>
-                </tr>
-                <tr>
-                    <td>Ernst Handel</td>
-                    <td>Rolandmendel@webmail.com</td>
-                    <td>Austria</td>
-                    <td>Francisco Chang</td>
-                    <td><span class="material-icons clicavel">edit</span></td>
-                </tr>
-                <tr>
-                    <td>Island Trading</td>
-                    <td>Helenbennett@proton.me</td>
-                    <td>UK</td>
-                    <td>Francisco Chang</td>
-                    <td><span class="material-icons clicavel">edit</span></td>
-                </tr>
-                <tr>
-                    <td>Königlich Essen</td>
-                    <td>Philipcramer@zoho.zo</td>
-                    <td>Germany</td>
-                    <td>Francisco Chang</td>
-                    <td><span class="material-icons clicavel">edit</span></td>
-                </tr>
-                <tr>
-                    <td>Laughing Bacchus Winecellars</td>
-                    <td>YoshiTannamuri12@yahoo.mail</td>
-                    <td>Canada</td>
-                    <td>Francisco Chang</td>
-                    <td><span class="material-icons clicavel">edit</span></td>
-                </tr>
-                <tr>
-                    <td>Magazzini Alimentari Riuniti</td>
-                    <td>Giovannirovelli@aol.com</td>
-                    <td>Italy</td>
-                    <td>Francisco Chang</td>
-                    <td><span class="material-icons clicavel">edit</span></td>
-                </tr>
-                <tr>
-                    <td>Sandro Menezes</td>
-                    <td>SimonCrowther@gmx.len</td>
-                    <td>UK</td>
-                    <td>Francisco Chang</td>
-                    <td><span class="material-icons clicavel">edit</span></td>
-                </tr>
-                <tr>
-                    <td>Paris spécialités</td>
-                    <td>Mariebertrand@proton.me</td>
-                    <td>France</td>
-                    <td>Francisco Chang</td>
-                    <td><span class="material-icons clicavel">edit</span></td>
-                </tr>
-            </table>
-        </div>
-        <div id="meuModal" class="modal">
-            <div class="modal-content">
-                <span class="close" id="fecharModal">&times;</span>
-                <h2>Cadastrar Usuário</h2>
-                <div style="display: flex;">
-                <h3 style="transform: translateY(15px);">Nome:</h3>
-                <input type="text" name="search" placeholder="Search..">
-                </div>
-                <div style="display: flex;">
-                <h3 style="transform: translateY(15px);">Email:</h3>
-                <input type="text" name="search" placeholder="Search..">
-                </div>
-                <div style="display: flex;">
-                <h3 style="transform: translateY(15px);">Senha:</h3>
-                <input type="text" name="search" placeholder="Search..">
-            </div>
-            </div>
-        </div>
+    <div style="display: flex; align-items: center; gap: 5px;">
+      <button id="abrirModal">Adicionar Funcionário</button>
     </div>
 
-    <script src="./js/modal.js"></script>
+    <div class="search-container">
+      <input type="text" name="search" placeholder="Pesquisar..." />
+      <span class="material-icons">search</span>
+    </div>
+
+    <div class="area-user">
+      <table id="funcionarios">
+        <thead>
+          <tr>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Tipo</th>
+            <th>Supervisor</th>
+            <th>Ações</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+
+    <!-- Modal de cadastro -->
+    <div id="meuModal" class="modal" style="display:none;">
+      <div class="modal-content">
+        <span class="close" id="fecharModal" style="cursor:pointer;">&times;</span>
+        <h2>Cadastrar Funcionário</h2>
+        <form id="formFuncionario" onsubmit="return false;">
+          <div style="margin-bottom: 10px;">
+            <label for="nome" style="width: 70px;">Nome:</label>
+            <input type="text" id="nome" name="nome" required />
+          </div>
+          <div style="margin-bottom: 10px;">
+            <label for="email" style="width: 70px;">Email:</label>
+            <input type="email" id="email" name="email" required />
+          </div>
+          <div style="margin-bottom: 10px;">
+            <label for="senha" style="width: 70px;">Senha:</label>
+            <input type="password" id="senha" name="senha" required />
+          </div>
+          <div style="text-align: right;">
+            <button type="submit" onclick="adicionarFuncionario()">Cadastrar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+    <!-- Modal para selecionar supervisor -->
+    <div id="modalSupervisor" class="modal" style="display:none;">
+      <div class="modal-content">
+        <span class="close" id="fecharModalSupervisor" style="cursor:pointer;">&times;</span>
+        <h2>Selecionar Supervisor</h2>
+
+        <input type="text" id="buscaSupervisor" placeholder="Buscar por nome ou email..."
+          style="width: 100%; margin-bottom: 10px;" />
+
+        <ul id="listaSupervisores" style="max-height: 200px; overflow-y: auto; padding-left: 0;"></ul>
+
+        <div style="text-align: right;">
+          <button onclick="confirmarAtribuicaoSupervisor()">Atribuir</button>
+        </div>
+      </div>
+    </div>
+
+
+
+  </div>
+
+  <script src="./js/modal.js"></script>
+  <script>
+    const idEmpresa = sessionStorage.ID_EMPRESA;
+    const tabelaCorpo = document.querySelector("#funcionarios tbody");
+
+    function carregarFuncionarios() {
+      fetch(`/funcionario/${idEmpresa}`)
+        .then(res => res.json())
+        .then(data => {
+          tabelaCorpo.innerHTML = "";
+
+          if (!data || data.length === 0 || data.mensagem) {
+            tabelaCorpo.innerHTML = `<tr><td colspan="5" style="text-align: center;">${data.mensagem || "Nenhum funcionário cadastrado."}</td></tr>`;
+            return;
+          }
+
+          for (var i = 0; i < data.length; i++) {
+            var funcionario = data[i];
+            var linha = document.createElement("tr");
+            linha.innerHTML = `
+              <td>${funcionario.nome}</td>
+              <td>${funcionario.email}</td>
+              <td>${funcionario.tipo ?? '-'}</td>
+              <td>${funcionario.supervisor ?? '-'}</td>
+              <td>${sessionStorage.TIPO_USUARIO !== "funcionario"
+                ? `
+                      <span class="material-icons clicavel" onclick="atribuirSupervisor(${funcionario.id})">supervisor_account</span>
+                      <span class="material-icons clicavel" onclick="deletarFuncionario(${funcionario.id})">delete</span>
+                  `
+                : "-"
+              }
+              </td>
+            `;
+            tabelaCorpo.appendChild(linha);
+          }
+
+        })
+        .catch(erro => {
+          console.error("Erro ao buscar funcionários:", erro);
+          tabelaCorpo.innerHTML = `<tr><td colspan="5">Erro ao carregar dados.</td></tr>`;
+        });
+    }
+
+    function adicionarFuncionario() {
+      const nome = document.getElementById("nome").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const senha = document.getElementById("senha").value.trim();
+      if (!nome || !email || !senha) return alert("Preencha todos os campos.");
+
+      fetch("/funcionario", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ nome, email, senha, fkEmpresa: idEmpresa, fkSupervisor: null }),
+      })
+        .then(res => {
+          if (res.ok) {
+            alert("Funcionário cadastrado!");
+            document.getElementById("formFuncionario").reset();
+            document.getElementById("meuModal").style.display = "none";
+            carregarFuncionarios();
+          } else {
+            res.json().then(data => alert(data.mensagem || "Erro ao cadastrar funcionário"));
+          }
+        })
+        .catch(err => alert("Erro de rede"));
+    }
+
+    let funcionarioSelecionado = null;
+    const inputSearch = document.querySelector("input[name='search']");
+    inputSearch.addEventListener("input", () => {
+      const filtro = inputSearch.value.toLowerCase();
+      const linhas = tabelaCorpo.querySelectorAll("tr");
+      for (var i = 0; i < linhas.length; i++) {
+        var linha = linhas[i];
+        var nome = linha.cells[0].textContent.toLowerCase();
+        var email = linha.cells[1].textContent.toLowerCase();
+        if (nome.includes(filtro) || email.includes(filtro)) {
+          linha.style.display = "";
+        } else {
+          linha.style.display = "none";
+        }
+      }
+
+    });
+
+
+    function deletarFuncionario(id) {
+      if (!confirm("Deseja deletar este funcionário?")) return;
+
+      const usuarioLogado = {
+        TIPO_USUARIO: sessionStorage.getItem('TIPO_USUARIO'),
+        ID_USUARIO: sessionStorage.getItem('ID_USUARIO'),
+        ID_EMPRESA: sessionStorage.getItem('ID_EMPRESA'),
+        EMAIL_USUARIO: sessionStorage.getItem('EMAIL_USUARIO'),
+      };
+
+      fetch(`/funcionario/${id}?tipoUsuario=empresa&idEmpresa=${idEmpresa}`, {
+        method: 'DELETE',
+      })
+        .then(res => res.json())
+        .then(data => console.log(data))
+        .catch(err => console.error(err));
+
+    }
+
+
+    let listaFuncionarios = [];
+
+    function atribuirSupervisor(idFuncionario) {
+      funcionarioSelecionado = idFuncionario;
+
+      fetch(`/funcionario/${idEmpresa}`)
+        .then(res => res.json())
+        .then(data => {
+          listaFuncionarios = data.filter(f => f.id !== idFuncionario);
+
+          atualizarListaSupervisores(listaFuncionarios);
+
+          document.getElementById("modalSupervisor").style.display = "block";
+        })
+        .catch(err => {
+          alert("Erro ao carregar supervisores");
+        });
+    }
+
+    function confirmarAtribuicaoSupervisor() {
+      const selecionado = document.querySelector("#listaSupervisores li.selecionado");
+
+      if (!selecionado) return alert("Selecione um supervisor na lista.");
+
+      const supervisorId = selecionado.dataset.id;
+
+      const usuarioLogado = {
+        TIPO_USUARIO: sessionStorage.getItem("TIPO_USUARIO"),
+        ID_USUARIO: sessionStorage.getItem("ID_USUARIO"),
+        ID_EMPRESA: sessionStorage.getItem("ID_EMPRESA"),
+        EMAIL_USUARIO: sessionStorage.getItem("EMAIL_USUARIO"),
+      };
+
+      fetch(`/funcionario/${funcionarioSelecionado}/supervisor`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "usuario-logado": JSON.stringify(usuarioLogado),
+        },
+        body: JSON.stringify({ fkSupervisor: supervisorId }),
+      })
+        .then((res) => {
+          if (res.ok) {
+            alert("Supervisor atribuído!");
+            document.getElementById("modalSupervisor").style.display = "none";
+            document.getElementById("buscaSupervisor").value = "";
+            document.getElementById("listaSupervisores").innerHTML = "";
+            carregarFuncionarios();
+          } else {
+            res.json().then(data => alert(data.mensagem || "Erro ao atribuir supervisor"));
+          }
+        })
+        .catch(() => alert("Erro de rede"));
+    }
+
+    document.getElementById("fecharModalSupervisor").onclick = () => {
+      document.getElementById("modalSupervisor").style.display = "none";
+    };
+
+
+    if (sessionStorage.TIPO_USUARIO === "funcionario") {
+      document.getElementById("abrirModal").style.display = "none";
+    }
+
+    document.getElementById("fecharModal").onclick = () => {
+      document.getElementById("meuModal").style.display = "none";
+    };
+    function atualizarListaSupervisores(lista) {
+      const ul = document.getElementById("listaSupervisores");
+      ul.innerHTML = "";
+
+      for (var i = 0; i < lista.length; i++) {
+        var f = lista[i];
+        var li = document.createElement("li");
+        li.textContent = f.nome + " (" + f.email + ")";
+        li.dataset.id = f.id;
+        li.style.cursor = "pointer";
+        li.style.padding = "5px";
+        li.style.borderBottom = "1px solid #ccc";
+
+        li.onclick = function () {
+          var elementos = document.querySelectorAll("#listaSupervisores li");
+          for (var j = 0; j < elementos.length; j++) {
+            elementos[j].style.backgroundColor = "";
+          }
+          this.style.backgroundColor = "#cce5ff";
+          this.classList.add("selecionado");
+          this.dataset.selecionado = "true";
+        };
+
+        ul.appendChild(li);
+      }
+
+    }
+    document.getElementById("fecharModalSupervisor").onclick = () => {
+      document.getElementById("modalSupervisor").style.display = "none";
+    };
+
+
+    document.getElementById("buscaSupervisor").addEventListener("input", function () {
+      const termo = this.value.toLowerCase();
+      const filtrados = listaFuncionarios.filter(f =>
+        f.nome.toLowerCase().includes(termo) ||
+        f.email.toLowerCase().includes(termo)
+      );
+      atualizarListaSupervisores(filtrados);
+    });
+
+
+    carregarFuncionarios();
+  </script>
 </body>
 
 </html>

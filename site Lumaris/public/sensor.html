@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Gerenciar Sensores</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        .card { border: 1px solid #ccc; padding: 10px; margin-bottom: 10px; border-radius: 6px; }
+        form { margin-top: 20px; }
+        label { display: block; margin: 8px 0 4px; }
+        input, select { width: 100%; padding: 6px; box-sizing: border-box; }
+        button { margin-top: 12px; padding: 8px 16px; }
+    </style>
+</head>
+<body>
+
+<h1>Sensores do Tanque</h1>
+
+<div id="sensoresContainer"></div>
+
+<h2>Cadastrar Novo Sensor</h2>
+<form id="formCadastroSensor">
+    <label for="numSerie">Número de Série</label>
+    <input type="text" id="numSerie" name="numSerie" required />
+
+    <label for="dtInstalacao">Data de Instalação</label>
+    <input type="date" id="dtInstalacao" name="dtInstalacao" required />
+
+    <label for="statusManutencao">Status da Manutenção</label>
+    <select id="statusManutencao" name="statusManutencao" required>
+        <option value="Ativo">Ativo</option>
+        <option value="Inativo">Inativo</option>
+        <option value="Manutencao">Em Manutenção</option>
+    </select>
+
+    <label for="dtManutencao">Data da Última Manutenção</label>
+    <input type="date" id="dtManutencao" name="dtManutencao" required />
+
+    <label for="proximaManutencao">Próxima Manutenção</label>
+    <input type="date" id="proximaManutencao" name="proximaManutencao" required />
+
+    <button type="submit">Cadastrar Sensor</button>
+</form>
+
+<script>
+    // Pega o id do tanque da query string
+    const params = new URLSearchParams(window.location.search);
+    const idTanque = params.get('idTanque');
+
+    if (!idTanque) {
+        alert("ID do tanque não especificado na URL.");
+        throw new Error("ID do tanque não especificado");
+    }
+
+    const container = document.getElementById('sensoresContainer');
+    const form = document.getElementById('formCadastroSensor');
+
+    function listarSensores() {
+        fetch(`/sensor/listar/${idTanque}`)
+            .then(res => {
+                if (!res.ok) throw new Error("Erro ao buscar sensores");
+                return res.json();
+            })
+            .then(sensores => {
+                container.innerHTML = '';
+                if (sensores.length === 0) {
+                    container.innerHTML = '<p>Nenhum sensor cadastrado para este tanque.</p>';
+                    return;
+                }
+                for (var i = 0; i < sensores.length; i++) {
+                    var sensor = sensores[i];
+                    var card = document.createElement('div');
+                    card.className = 'card';
+                    card.innerHTML = `
+                        <strong>Número de Série:</strong> ${sensor.numSerie}<br/>
+                        <strong>Data Instalação:</strong> ${sensor.dtInstalacao}<br/>
+                        <strong>Status Manutenção:</strong> ${sensor.statusManutencao}<br/>
+                        <strong>Data Última Manutenção:</strong> ${sensor.dtManutencao}<br/>
+                        <strong>Próxima Manutenção:</strong> ${sensor.proximaManutencao}
+                    `;
+                    container.appendChild(card);
+                }
+
+            })
+            .catch(err => {
+                container.innerHTML = `<p style="color:red;">${err.message}</p>`;
+            });
+    }
+
+    form.addEventListener('submit', e => {
+        e.preventDefault();
+
+        const data = {
+            numSerie: form.numSerie.value,
+            dtInstalacao: form.dtInstalacao.value,
+            statusManutencao: form.statusManutencao.value,
+            dtManutencao: form.dtManutencao.value,
+            proximaManutencao: form.proximaManutencao.value,
+            fkTanque: idTanque
+        };
+
+        fetch('/sensor/cadastrar', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(data)
+        })
+        .then(res => {
+            if (!res.ok) return res.json().then(data => Promise.reject(data.mensagem || 'Erro ao cadastrar sensor'));
+            return res.json();
+        })
+        .then(() => {
+            alert('Sensor cadastrado com sucesso!');
+            form.reset();
+            listarSensores();
+        })
+        .catch(err => alert(err));
+    });
+
+    listarSensores();
+</script>
+
+</body>
+</html>
