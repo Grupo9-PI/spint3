@@ -77,7 +77,7 @@ hr{
     border-radius: 12px;
     gap: 20px;
     width: 350px;
-    height: 50vh;
+    height: 60vh;
     box-shadow: 5px 5px 5px #3640433e;
     margin-top: 150px;
 }
@@ -138,116 +138,46 @@ body {
 }
 
 .footer {
-    display: flex;
-    position: relative;
-    width: 100%;
-    background: #8ee4f1;
-    min-height: 100px;
-    padding: 20px 50px;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    margin-top: 100px;
-}
-b{
-    color: teal;
+  background: linear-gradient(turquoise 0%, #0f4c75 100%);
+  color: white;
+  padding: 40px 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  border-top: 4px solid #40E0D0;
 }
 
-.icons-footer{
-    position: relative;
-    display: flex;
-    margin-left: 0;
-    margin-right: auto;
-    flex-wrap: wrap;
+.footer-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
-.icons-footer li{
-    list-style: none;
+.footer-left h2 {
+  margin-bottom: 50px;
+  font-family: Vogue;
 }
 
-.icons-footer li a{
-    font-size: 2em;
-    color: #fff;
-    margin: 0 10px;
-    display: inline-block;
-    transition: 0.5s;
-}
-p{ 
-    color: #fff;
-    text-align: center;
-    margin-top: 15px;
-    margin-bottom: 10px;
-    font-size: 1.1em;
+.footer-left p {
+  margin: 0;
+  font-size: 14px;
+  color: #cccccc;
 }
 
-/*pega a imagem da onda e posiciona ela*/
-
-.onda{
-    position: absolute;
-    top: -100px;
-    left: 0;
-    width: 100%;
-    height: 100px;
-    background: url(../assets/imgs/onda-footer.png);
-    background-size: 1000px 100px;
+.footer-right .social-icons {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  gap: 15px;
 }
 
-/*
-    divide a imagem em 4 ondas e faz elas infinitamente percorrerem a tela. 
-    também muda a opacidade para parecerem ondas diferentes.
-
-*/
-
-
-.onda#onda{
-    z-index: 1000;
-    opacity: 1;
-    bottom: 0;
-    animation: animateOnda 4s linear infinite;
+.footer-right .social-icons li a img {
+  width: 24px;
+  height: 24px;
 }
 
-.onda#onda2{
-    z-index: 999;
-    opacity: 0.5;
-    bottom: 10px;
-    animation: animateOnda2 4s linear infinite;
-}
 
-.onda#onda3{
-    z-index: 1000;
-    opacity: 0.2;
-    bottom: 15px;
-    animation: animateOnda 3s linear infinite;
-}
-
-.onda#onda4{
-    z-index: 999;
-    opacity: 0.7;
-    bottom: 20px;
-    animation: animateOnda2 3s linear infinite;
-}
-
-/*muda de fato a posição da foto da onda*/
-
-@keyframes animateOnda{
-    0%{
-        background-position-x: 1000px;
-    }
-    100%{
-        background-position-x: 0px;
-    }
-}
-
-@keyframes animateOnda2{
-    0%{
-        background-position-x: 0px;
-    }
-    100%{
-        background-position-x: 1000px;
-    }
-}
 /*faz os itens do redapé pularem quando passa o  mouse por cima*/
 .icons-footer li a:hover{
     transform: translateY(-10px);
 }
- 
