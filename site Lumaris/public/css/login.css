@@ -118,7 +118,7 @@ hr{
     margin-bottom: 5px;
 }
 .botao {
-    background-color: turquoise;
+    background: linear-gradient(turquoise 0%, #7ec4f3 100%);
     border: none;
     border-radius: 4px;
     width: 50%; 
@@ -126,10 +126,11 @@ hr{
     font-weight: bolder;
     font-size: large;
     margin: auto; 
+    cursor: pointer;
 }
 
 .botao:hover {
-    background-color: #009999;
+     background: linear-gradient(rgb(36, 124, 115) 0%, #42708f 100%);
 }
 
 body {
