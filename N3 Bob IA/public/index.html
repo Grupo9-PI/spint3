@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serviço de IA</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="nav">
+        <div>
+            <div class="fundo-home">
+                <div class="navbar">
+                    <div>
+                        <a class="logo" href="#">LUMARIS</a>
+                    </div>
+                    <div>
+                        <hr>
+                    </div>              
+                    <div class="navegacao">
+                        <a style="color: turquoise;">Início</a><a href="simulador.html">Simulador</a><a href="login.html">Login</a><a href="cadastro.html">Cadastro</a>
+                    </div>
+                </div>
+                </div>
+            </div>
+        </div>
+
+<div class="bgImage">
+    <div id="container">
+        <h1>BobIA</h1> <br> 
+        <h3>Nossa IA generativa para desafios complexos.</h3>
+        <br><br>
+        <textarea id="pergunta" type="text" placeholder="Como posso ajudar?"></textarea>
+        <br><br>
+        <button onclick="gerarResposta()">Gerar Solução</button>
+        <br>
+        <br>
+        <h3>Resultado:</h3>
+        <div id="resposta"></div>
+    </div>
+</div>
+
+    <script>
+        async function gerarResposta() {
+            const pergunta = document.getElementById('pergunta').value;
+            const response = await fetch('/perguntar', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ pergunta })
+            });
+            const data = await response.json();
+            resposta.style.display = 'block';
+            document.getElementById('resposta').innerText = data.resultado;
+        }
+    </script>
+</body>
+</html>
