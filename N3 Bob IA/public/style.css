@@ -1,0 +1,129 @@
+:root {
+  --branco: #FFF;
+  --azultifanny: #0ABAB5;
+  --preto: black;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: var(--branco);
+    margin: 0;
+    padding: 0;
+}
+
+#container {
+    width: 80%;
+    margin: 50px auto;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.navbar {
+    z-index: 2;
+    transition: 2s;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.navegacao{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    gap: 60px;
+}
+.navegacao a {
+    text-decoration: none;   
+    color: inherit;          
+}
+  
+
+/*junto com js, prende a logo e as opções de navegação no topo da tela*/
+.sticky {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    background-color: #ffffffe0;
+    transition: 2s;
+}
+
+/*tira as estilizações padrões do html em relação as margens*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Playfair Display';
+}
+
+/*estiliza e transforma da logo icone para a logo em extenso*/
+
+.logo{
+    display: flex;
+    font-family: vogue;
+    font-size: 40px;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    align-items: center;
+}
+
+a{
+    text-decoration: none;
+    color: #434343;
+}
+
+hr{
+
+    width: 900px;
+}
+
+h1 {
+    color: var(--azultifanny);
+}
+
+textarea[type="text"] {
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 5px;
+    width: 500px;
+}
+
+select,
+button {
+    padding: 8px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button {
+    background-color: #40e0d0cc;
+    color: var(--preto);
+    border: none;
+    font-weight: bolder;
+}
+
+button:hover {
+    background-color: var(--azultifanny);
+}
+
+#resposta {
+    margin-top: 20px;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: white;
+    border-color: var(--preto);
+    text-align: left;
+    display: none;
+}
+
+.bgImage {
+    display: flex;
+    align-items: flex-start;
+    background-image: 
+    linear-gradient(to right, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0)),
+    url(../public/assets/conchabanner2.png);
+    background-size: cover;
+}
